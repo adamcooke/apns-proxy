@@ -1,4 +1,4 @@
-# Pat
+# APNS Proxy
 
 This is a Rails application which orchestrates the sending of push notifications
 from applications to the Apple Push Notification Service (APNS). Rather than 
