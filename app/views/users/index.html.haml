@@ -1,0 +1,19 @@
+%p.back= link_to "Back to applications", :applications
+%h2 Manage Users
+%p.intro
+  The users you add here will be able to login to this system and manage all
+  applications, environments & auth keys.
+%table.data
+  %thead
+    %tr
+      %td Username
+      %td Name
+      %td E-Mail Address
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= link_to user.username, [:edit, user]
+        %td= user.name
+        %td= user.email_address
+
+%p.add= link_to "Add new user", :new_user, :class => 'button'

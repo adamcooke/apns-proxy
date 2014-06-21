@@ -1,0 +1,27 @@
+= form_for [@application, @auth_key] do |f|
+  = f.error_messages
+  %dl
+    %dt= f.label :name
+    %dd
+      = f.text_field :name, :class => 'focus'
+      .info 
+        %p This is just a descriptive name so you know where this key has been distributed and/or what it is used for.
+    %dt= f.label :key
+    %dd
+      = f.text_field :key, :placeholder => "Leave blank to auto generate"
+      .info
+        %p
+          This is a unique key which must be used when sending push notifications from your applications to this service.
+          You can leave this blank and a key will be automatically generated.
+    %dt= f.label :environment_id
+    %dd.select
+      = f.collection_select :environment_id, @application.environments.asc, :id, :name, :include_blank => true
+      .info
+        %p
+          Any notifications submitted using this auth key will be sent to the APNS service using the certificate
+          specified in the environment selected above.
+  %p.submit
+    = f.submit
+    - unless @auth_key.new_record?
+      %span or #{link_to "delete this auth key", [@application, @auth_key], :method => :delete, :data => {:confirm => "Are you sure you wish to delete this auth key?"}}
+  

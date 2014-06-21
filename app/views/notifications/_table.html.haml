@@ -1,0 +1,20 @@
+%table.data
+  %thead
+    %tr
+      %td{:width => '7%'} ID
+      %td{:width => '15%'} Time
+      %td{:width => '25%'} Auth Key
+      %td{:width => '10%'} Status
+      %td{:width => '40%'} Description
+  %tbody
+    - if notifications.empty?
+      %tr
+        %td.empty{:colspan => 5}= empty_message
+    - else
+      - notifications.each do |notification|
+        %tr
+          %td= link_to notification.id, [notification.auth_key.application, notification]
+          %td= notification.created_at.to_s(:short)
+          %td= notification.auth_key.name
+          %td= notification.pushed_at ? 'Sent' : 'Pending'
+          %td= notification.description

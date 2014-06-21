@@ -1,0 +1,36 @@
+%p.back= link_to "Back to Sirportly", [@application, :notifications]
+%h2 Notification ##{@notification.id}
+
+%h3 General Properties
+
+%dl.info
+  %dt Device
+  %dd= link_to @notification.device.token, @notification.device
+  %dt Auth Key
+  %dd= link_to @notification.auth_key.name, [:edit, @application, @notification.auth_key]
+  %dt Environment
+  %dd= link_to @notification.auth_key.environment.name, [:edit, @application, @notification.auth_key.environment]
+  
+  
+%h3 Alert Details
+%dl.info  
+  %dt Body
+  %dd= @notification.alert_body
+  %dt Action Loc. Key
+  %dd= @notification.action_loc_key || 'None specified'
+  %dt Loc. Key
+  %dd= @notification.loc_key || 'None specified'
+  %dt Loc. Args
+  %dd= @notification.loc_args || 'None specified'
+  %dt Launch Image
+  %dd= @notification.launch_image || 'None specified'
+
+%h3 Sound Details
+%dl.info
+  %dt Sound 
+  %dd= @notification.sound || 'No sound file specified'
+
+%h3 Badge Details
+%dl.info
+  %dt Badge
+  %dd= @notification.badge || 'No badge update specified'

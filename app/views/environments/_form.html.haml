@@ -1,0 +1,20 @@
+= form_for [@application, @environment] do |f|
+  = f.error_messages
+  %dl
+    %dt= f.label :name
+    %dd
+      = f.text_field :name, :class => 'focus'
+      .info 
+        %p It is recommended to use a name such as 'Release', 'Debug' or 'Beta' for your environment.
+    %dt= f.label :certificate
+    %dd
+      = f.text_area :certificate
+      .info
+        %p
+          You should paste your APNS private key & certificate in PEM format in this box.
+          You may wish to look at using the #{link_to 'APNS key converter', 'https://github.com/adamcooke/apns-key-convert'}
+          tool to help with getting your files into the correct format.
+  %p.submit
+    = f.submit
+    - unless @environment.new_record?
+      %span or #{link_to "delete this environment", [@application, @environment], :method => :delete, :data => {:confirm => "Are you sure you wish to remove this environment?"}}

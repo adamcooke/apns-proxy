@@ -1,0 +1,151 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require reset
+ *= require_tree .
+
+ *= require_self
+ */
+
+html { font-family:Helvetica Neue, Arial, sans-serif; font-size:12px; background:#eaf2f5;}
+body { background-color:#eaf2f5; }
+
+a { color:#0898d4;}
+
+#content {
+	background:#fff;
+	width:650px;
+	margin:60px auto 20px auto;
+	border-top:3px solid #444;
+	box-shadow:0 0 55px rgba(0,0,0,0.2);
+	div.inner {
+		padding:35px;
+		
+		h2 { font-size:2.5em; font-weight:300; }
+		h3 { font-size:1.4em; border-bottom:1px solid #888; margin:15px 0; color:#888; font-weight:normal;}
+		p.add { margin:15px 0; }
+		p.add a { margin-right:10px;}
+		p.intro { font-size:1.2em; color:#999; line-height:1.5; margin:5px 0;}
+		p.back { float:right; margin-top:3px;}
+		p.back a { color:#999; text-decoration:none; font-size:1.2em; background:#efefef; display:block;padding:7px 10px; border-radius:4px; border-bottom:2px solid #ddd;}
+		p.back a:before { content:"\2190"; padding-right:3px;}
+		
+		#flash-notice {
+			border-bottom:3px solid #84bb23;
+			color:#84bb23;
+			font-weight:bold;
+			margin-bottom:25px;
+			padding-bottom:5px;
+			font-size:1.2em;
+		}
+
+		#flash-alert {
+			border-bottom:3px solid #d51d1d;
+			color:#d51d1d;
+			font-weight:bold;
+			margin-bottom:25px;
+			padding-bottom:5px;
+			font-size:1.2em;
+		}
+		
+		ul.nav {
+			margin:15px 0;
+			overflow:hidden;
+			li {
+				float:left;
+				margin-right:5px;
+				a {
+					background:#bad1db;
+					padding:4px 10px;
+					text-decoration:none;
+					display:block;
+					border-bottom:2px solid darken(#bad1db, 10%);
+					border-radius:4px;
+					color:#1c6f91;
+				}
+			}
+		}
+		
+		table.data {
+			width:100%;
+			margin:15px 0;
+			tbody tr td { border:1px solid #ccc; padding:7px;}
+			thead tr td { border:1px solid #ccc; background:#f7f7f7;padding:6px 7px; font-size:0.9em; color:#aaa;}
+			tbody tr td.empty { text-align:center; padding:30px 100px; font-style:italic; color:#999;  line-height:1.6;}
+		}
+		
+		dl.info {
+			margin:15px 0;
+			dt { float:left; width:140px;  font-weight:bold;}
+			dd { margin-left:160px; margin-bottom:10px;}
+		}
+		
+		form {
+			margin-top:35px;
+			dl {
+				margin:15px 0;
+				dt { float:left; width:140px;padding-top:7px; font-weight:bold; }
+				dd { margin-left:160px; margin-bottom:15px;}
+				dd input[type=text], dd input[type=password], dd textarea { width:100%; border:1px solid #aab8be; background:#e9eff2; padding:6px; font-size:1.2em;}
+				dd select { width:100%;}
+				dd textarea { height:300px;}
+				dd div.info { margin-top:10px;}
+				dd div.info p { line-height:1.5; color:#999;}
+				dd.select { padding-top:5px;}
+			}
+			div.errorExplanation {
+				border:1px solid #d51d1d;
+				padding:15px;
+				background:#f9efef;
+				margin:15px 0;
+				line-height:1.7;
+				h2 { font-size:1.2em; font-weight:bold; color:#d51d1d;}
+				ul li { list-style:square; margin-left:25px;}
+			}
+			
+			p.submit {margin-left:160px; margin-top:35px;}
+			p.submit span { padding-left:5px; font-size:1.1em;}
+			p.submit input { 
+				background:#84bb23;
+				color:#fff;
+				text-decoration:none;
+				padding:5px 14px 3px 14px;
+				border:0;
+				border-radius:3px;
+				border-bottom:2px solid darken(#84bb23, 5%);
+			}
+		}
+	}
+}
+
+footer {
+	width:650px;
+	margin:auto;
+	text-align:right;
+	color:#a0b8c1;
+	a { color:#a0b8c1;}
+	font-size:0.9em;
+	margin-bottom:40px;
+}
+
+a.button {
+	background:#84bb23;
+	color:#fff;
+	text-decoration:none;
+	padding:4px 14px 3px 14px;
+	border-radius:3px;
+	border-bottom:2px solid darken(#84bb23, 5%);
+	&.grey {
+		background:#999;
+		border-bottom-color:darken(#999, 5%);
+	}
+}

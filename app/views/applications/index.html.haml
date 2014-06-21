@@ -1,0 +1,21 @@
+%h2 Welcome to Pat
+%p.intro
+  Pat is a service to proxy notifications to the APNS service. Select an
+  application from the list below to manage it & view its recent notifications.
+  
+%table.data
+  %thead
+    %tr
+      %td Name
+  %tbody
+    - if @applications.empty?
+      %tr
+        %td.empty{:colspan => 1} There are no applications configured yet.
+    - else
+      - @applications.each do |application|
+        %tr
+          %td= link_to application.name, application
+
+%p.add
+  = link_to "Add new application", :new_application, :class => 'button'
+  = link_to "Manage users", :users, :class => 'button grey'

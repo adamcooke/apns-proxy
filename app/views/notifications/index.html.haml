@@ -1,0 +1,5 @@
+%p.back= link_to "Back to Sirportly", @application
+%h2 Notifications
+
+= render 'table', :notifications => @notifications, :empty_message => 'There are no notifications for this application. Notifications can only be added using the API in conjunction with an auth key.'
+

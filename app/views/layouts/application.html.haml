@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title ApnsProxy
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body
+    #content
+      .inner
+        = display_flash
+        = yield
+    %footer
+      - if logged_in?
+        %p Logged in as #{current_user.name} (#{link_to 'logout', logout_path, :method => :delete})

@@ -1,0 +1,42 @@
+%p.back= link_to "Back to application list", :applications
+%h2= @application.name
+
+%ul.nav
+  %li= link_to "Notifications", [@application, :notifications]
+  %li= link_to "Edit application", [:edit, @application]
+  %li= link_to "Delete application", @application, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this application?"}
+  
+
+%h3 Environments
+%table.data
+  %thead
+    %td Name
+  %tbody
+    - if @environments.empty?
+      %tr
+        %td.empty{:colspan => 1} There are no environments configured for this application.
+    - else
+      - @environments.each do |environment|
+        %tr
+          %td= link_to environment.name, [:edit, @application, environment]
+%p.add= link_to "Add an environment", [:new, @application, :environment], :class => 'button'
+
+
+%h3 Auth Keys
+%table.data
+  %thead
+    %tr
+      %td Name
+      %td Key
+      %td Environment
+  %tbody
+    - if @auth_keys.empty?
+      %tr
+        %td.empty{:colspan => 3} There are no auth keys configured for this application.
+    - else
+      - @auth_keys.each do |auth_key|
+        %tr
+          %td= link_to auth_key.name, [:edit, @application, auth_key]
+          %td= auth_key.key
+          %td= auth_key.environment.name
+%p.add= link_to "Add an auth key", [:new, @application, :auth_key], :class => 'button'

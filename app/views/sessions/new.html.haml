@@ -1,0 +1,12 @@
+%h2 Please login...
+%p.intro
+  Enter your username & password in order to login to this system.
+  
+= form_tag do
+  %dl
+    %dt= label_tag :username
+    %dd= text_field_tag :username, params[:username], :class => 'focus'
+    %dt= label_tag :password
+    %dd= password_field_tag :password
+  %p.submit
+    = submit_tag 'Login'

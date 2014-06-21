@@ -1,0 +1,20 @@
+%p.back= link_to "Back to #{@device.auth_key.application.name}", @device.auth_key.application
+
+%h2 Device ##{@device.id}
+
+%dl.info
+  %dt Auth Key
+  %dd= link_to @device.auth_key.name, [:edit, @device.auth_key.application, @device.auth_key]
+  %dt Environment
+  %dd= link_to @device.auth_key.environment.name, [:edit, @device.auth_key.application, @device.auth_key.environment]
+  %dt First Seen
+  %dd= @device.created_at.to_s(:long)
+  %dt Total Notifications
+  %dd= @device.usage
+  %dt Last Notification
+  %dd= @device.last_used_at ? @device.last_used_at.to_s(:long) : 'Not used'
+  %dt Un-subscribed at
+  %dd= @device.unsubscribed_at ? @device.unsubscribed_at.to_s(:long) : 'Not un-subscribed'
+  
+%h3 Notifications
+= render 'notifications/table', :notifications => @notifications, :empty_message => 'This device has been sent no notifications.'

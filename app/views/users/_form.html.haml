@@ -1,0 +1,19 @@
+= form_for @user do |f|
+  = f.error_messages
+  %dl
+    %dt= f.label :username
+    %dd= f.text_field :username, :class => 'focus'
+    %dt= f.label :password
+    %dd= f.password_field :password
+    %dt= f.label :password_confirmation
+    %dd= f.password_field :password_confirmation
+    %dt= f.label :name
+    %dd= f.text_field :name
+    %dt= f.label :email_address
+    %dd= f.text_field :email_address
+  
+  %p.submit
+    = f.submit
+    - unless @user.new_record?
+      %span or #{link_to 'delete user', @user, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this user?"}}
+    

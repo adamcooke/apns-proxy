@@ -1,0 +1,6 @@
+= form_for @application do |f|
+  = f.error_messages
+  %dl
+    %dt= f.label :name
+    %dd= f.text_field :name, :class => 'focus'
+  %p.submit= f.submit
