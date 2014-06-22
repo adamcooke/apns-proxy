@@ -19,10 +19,10 @@ class Application < ActiveRecord::Base
   scope :asc, -> { order(:name) }
   
   after_create do
-    release = self.environments.create(:name => 'Release', :certificate => 'Insert your certificate here...')
-    debug = self.environments.create(:name => 'Debug', :certificate => 'Insert your certificate here...')
-    self.auth_keys.create(:name => 'Auth Key for Release', :environment => release)
-    self.auth_keys.create(:name => 'Auth Key for Debug', :environment => debug)
+    release = self.environments.create!(:name => 'Release', :apns_environment => 'production', :certificate => 'Insert your certificate here...')
+    debug = self.environments.create!(:name => 'Debug', :apns_environment => 'development', :certificate => 'Insert your certificate here...')
+    self.auth_keys.create!(:name => 'Auth Key for Release', :environment => release)
+    self.auth_keys.create!(:name => 'Auth Key for Debug', :environment => debug)
   end
   
 end

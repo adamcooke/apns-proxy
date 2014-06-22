@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622172728) do
+ActiveRecord::Schema.define(version: 20140622173819) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20140622172728) do
     t.text     "certificate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "apns_environment"
   end
 
   add_index "environments", ["application_id"], name: "index_environments_on_application_id", using: :btree

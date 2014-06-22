@@ -11,6 +11,7 @@
 %table.data
   %thead
     %td Name
+    %td APNS Env.
   %tbody
     - if @environments.empty?
       %tr
@@ -19,6 +20,7 @@
       - @environments.each do |environment|
         %tr
           %td= link_to environment.name, [:edit, @application, environment]
+          %td= environment.apns_environment.humanize
 %p.add= link_to "Add an environment", [:new, @application, :environment], :class => 'button'
 
 

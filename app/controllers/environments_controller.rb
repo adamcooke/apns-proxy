@@ -32,7 +32,7 @@ class EnvironmentsController < ApplicationController
   private
   
   def permitted_params
-    params.require(:environment).permit(:name, :certificate)
+    params.require(:environment).permit(:name, :apns_environment, :certificate)
   end
   
 end

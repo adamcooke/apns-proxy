@@ -96,6 +96,7 @@ a { color:#0898d4;}
 				dt { float:left; width:140px;padding-top:7px; font-weight:bold; }
 				dd { margin-left:160px; margin-bottom:15px;}
 				dd input[type=text], dd input[type=password], dd textarea { width:100%; border:1px solid #aab8be; background:#e9eff2; padding:6px; font-size:1.2em;}
+				dd textarea { font-family:Monaco, 'Courier New', fixed; font-size:0.8em; overflow-x:auto; white-space:pre; word-wrap:normal;}
 				dd select { width:100%;}
 				dd textarea { height:300px;}
 				dd div.info { margin-top:10px;}
