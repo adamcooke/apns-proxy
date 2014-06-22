@@ -8,13 +8,13 @@ class ApiController < ApplicationController
       @payload = JSON.parse(request.body.read).with_indifferent_access
     rescue
       json({:error => 'Invalid json payload'}, 400)
-      return
+      next
     end
     
     @auth_key = AuthKey.find_by_key(@payload[:auth_key])
     if @auth_key.nil?
       json({:error => 'Access denied'}, 403)
-      return
+      next
     end
   end
   
