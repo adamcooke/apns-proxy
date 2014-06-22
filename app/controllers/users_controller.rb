@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(permitted_params)
     if @user.save
-      redirect_to @user, :notice => "User created successfully"
+      redirect_to :users, :notice => "User created successfully"
     else
       render :action => "new"
     end
@@ -21,13 +21,18 @@ class UsersController < ApplicationController
   
   def update
     if @user.update_attributes(permitted_params)
-      redirect_to @user, :notice => "User updated successfully"
+      redirect_to :users, :notice => "User updated successfully"
     else
       render :action => "edit"
     end
   end
   
   def destroy
+    if @user == current_user
+      redirect_to :users, :alert => "You cannot delete yourself"
+      return
+    end
+    
     @user.destroy
     redirect_to :users, :notice => "User deleted successfully"
   end
