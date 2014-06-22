@@ -1,8 +1,5 @@
 class ApiController < ApplicationController
   
-  class Error < StandardError; end
-  
-  rescue_from Error, :with => :handle_error
   skip_before_filter :verify_authenticity_token
   skip_before_filter :login_required
   
@@ -10,9 +7,15 @@ class ApiController < ApplicationController
     begin
       @payload = JSON.parse(request.body.read).with_indifferent_access
     rescue
-      raise Error, "`payload` could not be parsed as JSON"
+      json({:error => 'Invalid json payload'}, 400)
+      return
     end
-    @auth_key = AuthKey.find_by_key(@payload[:auth_key]) || raise(Error, "auth_key is invalid")
+    
+    @auth_key = AuthKey.find_by_key(@payload[:auth_key])
+    if @auth_key.nil?
+      json({:error => 'Access denied'}, 403)
+      return
+    end
   end
   
   def notify
@@ -30,17 +33,13 @@ class ApiController < ApplicationController
       device.last_registered_at = Time.now
       device.save!
     end
-    json({:status => 'ok', :device => device ? device.id : nil})
+    json({:status => 'ok', :device => device ? device.id : nil}, 200)
   end
   
   private
   
   def json(object, status = 200)
     render :json => object, :status => status
-  end
-  
-  def handle_error(error)
-    json :error => error.message, :status => 400
   end
   
 end
