@@ -10,7 +10,13 @@
   %dd= link_to @notification.auth_key.name, [:edit, @application, @notification.auth_key]
   %dt Environment
   %dd= link_to @notification.auth_key.environment.name, [:edit, @application, @notification.auth_key.environment]
-  
+
+%h3 Delivery Status
+%dl.info
+  %dt Pushed at
+  %dd= @notification.pushed_at ? @notification.pushed_at.to_s(:long) : 'Not pushed yet'
+  %dt Error Code
+  %dd= @notification.error_code ? Notification::ERROR_CODES[@notification.error_code].to_s.humanize || "Unknown error (#{@notification.error_code})" : 'No error code'
   
 %h3 Alert Details
 %dl.info  

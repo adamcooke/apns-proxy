@@ -56,12 +56,7 @@ module ApnsProxy
           if connection.nil?
             connection = connections[notification.auth_key.environment.id] = notification.auth_key.environment.create_connection
           end
-          
-          #
-          # Add this to the connections we just looked at
-          #
-          connections_in_loop << connection 
-          
+                    
           #
           # Open the connection if it isn't open
           #
@@ -72,9 +67,15 @@ module ApnsProxy
             end
           rescue OpenSSL::PKey::RSAError
             puts "----> Invalid certificate/key has been provided for the environment".red
+            connections[notification.auth_key.environment.id] = nil
             notification.mark_as_failed!(3000)
             next
           end
+          
+          #
+          # Add this to the connections we just looked at
+          #
+          connections_in_loop << connection 
           
           #
           # Generate a houston notification

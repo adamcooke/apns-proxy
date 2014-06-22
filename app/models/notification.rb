@@ -28,6 +28,22 @@
 
 class Notification < ActiveRecord::Base
   
+  ERROR_CODES = {
+    1000  => :invalid,
+    2000  => :expired,
+    3000  => :invalid_certificate,
+    1     => :apns_processing_error,
+    2     => :apns_missing_device_token,
+    3     => :apns_missing_topic,
+    4     => :apns_missing_payload,
+    5     => :apns_invalid_token_size,
+    6     => :apns_invalid_topic_size,
+    7     => :apns_invalid_payload_size,
+    8     => :apns_invalid_token,
+    10    => :apns_shutdown,
+    255   => :apns_unknown
+  }
+  
   belongs_to :auth_key
   belongs_to :device
   
@@ -51,7 +67,7 @@ class Notification < ActiveRecord::Base
   # Has this been pushed?
   #
   def pushed?
-    !!self.pushed_at
+    !!self.pushed_att
   end
   
   #

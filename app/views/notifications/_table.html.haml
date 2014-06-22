@@ -16,5 +16,5 @@
           %td= link_to notification.id, [notification.auth_key.application, notification]
           %td= notification.created_at.to_s(:short)
           %td= notification.auth_key.name
-          %td= notification.pushed_at ? 'Sent' : 'Pending'
+          %td= notification.pushed_at ? 'Sent' : notification.error_code
           %td= notification.description
