@@ -54,3 +54,95 @@ The default username is **admin** and the default password is **password**.
   ```
   rake apns_proxy:unsubscribe
   ```
+
+## API Methods
+
+This section outlines the HTTP API methods which are available to you and are
+used for sending notifications and registering devices.
+
+### The Basics
+
+This is an HTTP JSON API and parameters should be sent as JSON in the body of
+the HTTP request. It is recommended that you use the POST HTTP verb for all
+requests.
+
+Any parameters shown below which include periods represent a hash which should
+be passed.
+
+### Sending Notifications
+
+In order to send a notification, you will need an `auth_key` and a device
+identifier.
+
+```
+POST /api/notify
+```
+
+* `auth_token` - your auth token (string, required)
+* `device` - the device identifier (string, required)
+
+* `notification.alert.body` - the text body for your notification (string)
+* `notification.alert.action_loc_key` - localization key for your action button (string)
+* `notification.alert.loc_key` - localization key for your alert message (string)
+* `notification.alert.log_args` - arguments for your localization (array of strings)
+* `notification.alert.launch_image` - the launch image to display (string)
+* `notification.sound` - the name of a sound file to play (string)
+* `notification.badge` - the badge to display on the app (integer)
+* `notification.content_available` - whether content is available or not (boolean)
+* `notification.custom_data` - custom data to return to the API (hash)
+
+**NOTE:** APNS allows a maximum of 256 bytes to be sent to them so you should
+ensure that your notification is smaller than this. There is a some overhead.
+If your notification is too big, the interface will provide you with a `2000`
+error code.
+
+When you submit this, you will receive either a `201 Created` status which
+means that your notification was added and delivery will be attempted. If there
+is an error, you'll receive a `422 Unprocessable Entity` status and the response
+body will contain an array of `errors`. 
+
+The most significant thing to look out for is information that a device you
+are sending notifications for has been unsubscribed. Such an issue will look 
+this like in the response body:
+
+```javascript
+{
+  "errors": {
+    "device": [ "unsubscribed" ]
+  }
+}
+```
+
+### Registering devices
+
+It is strongly recommended to let the proxy service know whenever a new device
+is registered with your application. This allows us to help manage the
+unsubscriptions for your application and ensure that certificates aren't
+blocked by Apple.
+
+```
+POST /api/register
+```
+
+* `auth_token` - your auth token (string, required)
+* `device` - the device identifier (string, required)
+
+You will always receive a `200 OK` from this message with a response body 
+similar to that shown below:
+
+```javascript
+{
+  "device": 1,
+  "status": "ok"
+}
+```
+
+In some cases, `device` will be null. This means that the device identifier 
+you have provided has not yet been sent any notifications. This is nothing
+to worry about as a device is officially only registered in the database when
+it is first sent a notification.
+
+## Licence
+
+This software is licenced under the MIT-LICENSE.
+

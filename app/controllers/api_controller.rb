@@ -18,7 +18,7 @@ class ApiController < ApplicationController
   def notify
     notification = Notification.build_from_payload(@auth_key, @payload)
     if notification.save
-      json notification.to_hash
+      json(notification.to_hash, 201)
     else
       json({:errors => notification.errors}, 422)
     end

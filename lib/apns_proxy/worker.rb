@@ -65,9 +65,15 @@ module ApnsProxy
           #
           # Open the connection if it isn't open
           #
-          unless connection.open?
-            puts "Opening connection for #{notification.id}"
-            connection.open
+          begin
+            unless connection.open?
+              puts "Opening connection for #{notification.id}"
+              connection.open
+            end
+          rescue OpenSSL::PKey::RSAError
+            puts "----> Invalid certificate/key has been provided for the environment".red
+            notification.mark_as_failed!(3000)
+            next
           end
           
           #
