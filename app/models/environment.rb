@@ -13,10 +13,15 @@
 class Environment < ActiveRecord::Base
   
   belongs_to :application
+  has_many :auth_keys, :dependent => :destroy
   
   validates :name, :presence => true, :length => {:maximum => 50}
   validates :certificate, :presence => true
   
   scope :asc, -> { order(:name) }
+  
+  def create_connection
+    Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, self.certificate, nil)
+  end
   
 end

@@ -4,6 +4,7 @@ class ApiController < ApplicationController
   
   rescue_from Error, :with => :handle_error
   skip_before_filter :verify_authenticity_token
+  skip_before_filter :login_required
   
   before_filter do
     begin

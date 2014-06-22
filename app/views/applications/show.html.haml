@@ -38,5 +38,5 @@
         %tr
           %td= link_to auth_key.name, [:edit, @application, auth_key]
           %td= auth_key.key
-          %td= auth_key.environment.name
+          %td= auth_key.environment.try(:name) || 'None'
 %p.add= link_to "Add an auth key", [:new, @application, :auth_key], :class => 'button'

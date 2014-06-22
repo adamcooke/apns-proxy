@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140621212958) do
+ActiveRecord::Schema.define(version: 20140622111759) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20140621212958) do
     t.string   "sound"
     t.boolean  "content_available"
     t.text     "custom_data"
+    t.integer  "error_code"
   end
 
   create_table "users", force: true do |t|
