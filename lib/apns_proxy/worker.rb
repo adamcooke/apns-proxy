@@ -26,7 +26,15 @@ module ApnsProxy
         # Get all notifications which need pushin to the Apple service and loop
         # through them all.
         #
-        Notification.requires_pushing.each do |notification|
+        Notification.requires_pushing.unlocked.each do |notification|
+          
+          #
+          # Get a lock?
+          #
+          if Notification.where(:id => notification.id, :locked => false).update_all({:locked => true}) != 1
+            puts "[N#{notification.id.to_s.rjust(7, '0')}] Couldn't get lock on notification"
+            next
+          end
           
           # 
           # Check that we should still send this notification

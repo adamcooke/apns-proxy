@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622171237) do
+ActiveRecord::Schema.define(version: 20140622172728) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140622171237) do
     t.boolean  "content_available"
     t.text     "custom_data"
     t.integer  "error_code"
+    t.boolean  "locked",            default: false
   end
 
   add_index "notifications", ["auth_key_id"], name: "index_notifications_on_auth_key_id", using: :btree

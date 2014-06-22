@@ -17,6 +17,7 @@
 #  content_available :boolean
 #  custom_data       :text
 #  error_code        :integer
+#  locked            :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -44,6 +45,7 @@ class Notification < ActiveRecord::Base
   
   scope :asc, -> { order(:id => :desc) }
   scope :requires_pushing, -> { where(:pushed_at => nil, :error_code => nil).order(:id) }
+  scope :unlocked, -> { where(:locked => false) }
   
   #
   # Has this been pushed?
@@ -58,6 +60,7 @@ class Notification < ActiveRecord::Base
   def mark_as_repushable!
     self.pushed_at = nil
     self.error_code = nil
+    self.locked = false
     self.save!
   end
   
