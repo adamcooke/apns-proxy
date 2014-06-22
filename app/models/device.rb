@@ -2,13 +2,14 @@
 #
 # Table name: devices
 #
-#  id              :integer          not null, primary key
-#  auth_key_id     :integer
-#  token           :string(255)
-#  usage           :integer          default(0)
-#  last_used_at    :datetime
-#  unsubscribed_at :datetime
-#  created_at      :datetime
+#  id                        :integer          not null, primary key
+#  auth_key_id               :integer
+#  token                     :string(255)
+#  usage                     :integer          default(0)
+#  last_sent_notification_at :datetime
+#  unsubscribed_at           :datetime
+#  created_at                :datetime
+#  last_registered_at        :datetime
 #
 # Indexes
 #
@@ -33,9 +34,10 @@ class Device < ActiveRecord::Base
       device = self.new
       device.auth_key = auth_key
       device.token = token
+      device.last_registered_at = Time.now
     end
     device.usage += 1
-    device.last_used_at = Time.now
+    device.last_sent_notification_at = Time.now
     device.save!
     device
   end

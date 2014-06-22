@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622173819) do
+ActiveRecord::Schema.define(version: 20140622180210) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -34,10 +34,11 @@ ActiveRecord::Schema.define(version: 20140622173819) do
   create_table "devices", force: true do |t|
     t.integer  "auth_key_id"
     t.string   "token"
-    t.integer  "usage",           default: 0
-    t.datetime "last_used_at"
+    t.integer  "usage",                     default: 0
+    t.datetime "last_sent_notification_at"
     t.datetime "unsubscribed_at"
     t.datetime "created_at"
+    t.datetime "last_registered_at"
   end
 
   add_index "devices", ["auth_key_id"], name: "index_devices_on_auth_key_id", using: :btree
