@@ -2,6 +2,10 @@ module ApnsProxy
   class Worker
     
     def self.run
+      
+      Signal.trap("INT")  { @stop = true }
+      Signal.trap("TERM")  { @stop = true }
+      
       puts "Started APNS Proxy worker..."
       
       #
@@ -171,6 +175,14 @@ module ApnsProxy
             end
           end
           error = nil
+        end
+        
+        #
+        # If we should stop, let's just stop the loop
+        #
+        if @stop
+          puts "Stopping worker..."
+          break
         end
         
         #
