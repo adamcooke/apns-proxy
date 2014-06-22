@@ -60,14 +60,10 @@ The default username is **admin** and the default password is **password**.
 This section outlines the HTTP API methods which are available to you and are
 used for sending notifications and registering devices.
 
-### The Basics
-
 This is an HTTP JSON API and parameters should be sent as JSON in the body of
 the HTTP request. It is recommended that you use the POST HTTP verb for all
-requests.
-
-Any parameters shown below which include periods represent a hash which should
-be passed.
+requests. Any parameters shown below which include periods represent a hash
+which should be passed.
 
 ### Sending Notifications
 
@@ -80,7 +76,6 @@ POST /api/notify
 
 * `auth_token` - your auth token (string, required)
 * `device` - the device identifier (string, required)
-
 * `notification.alert.body` - the text body for your notification (string)
 * `notification.alert.action_loc_key` - localization key for your action button (string)
 * `notification.alert.loc_key` - localization key for your alert message (string)
