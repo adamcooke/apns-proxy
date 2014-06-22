@@ -10,6 +10,10 @@
 #  unsubscribed_at :datetime
 #  created_at      :datetime
 #
+# Indexes
+#
+#  index_devices_on_auth_key_id  (auth_key_id)
+#
 
 class Device < ActiveRecord::Base
   

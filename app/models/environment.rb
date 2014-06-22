@@ -9,6 +9,10 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
+# Indexes
+#
+#  index_environments_on_application_id  (application_id)
+#
 
 class Environment < ActiveRecord::Base
   

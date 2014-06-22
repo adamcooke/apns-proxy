@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622111759) do
+ActiveRecord::Schema.define(version: 20140622171237) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20140622111759) do
     t.datetime "updated_at"
   end
 
+  add_index "auth_keys", ["application_id"], name: "index_auth_keys_on_application_id", using: :btree
+  add_index "auth_keys", ["environment_id"], name: "index_auth_keys_on_environment_id", using: :btree
+
   create_table "devices", force: true do |t|
     t.integer  "auth_key_id"
     t.string   "token"
@@ -37,6 +40,8 @@ ActiveRecord::Schema.define(version: 20140622111759) do
     t.datetime "created_at"
   end
 
+  add_index "devices", ["auth_key_id"], name: "index_devices_on_auth_key_id", using: :btree
+
   create_table "environments", force: true do |t|
     t.integer  "application_id"
     t.string   "name"
@@ -44,6 +49,8 @@ ActiveRecord::Schema.define(version: 20140622111759) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "environments", ["application_id"], name: "index_environments_on_application_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.integer  "auth_key_id"
@@ -61,6 +68,10 @@ ActiveRecord::Schema.define(version: 20140622111759) do
     t.text     "custom_data"
     t.integer  "error_code"
   end
+
+  add_index "notifications", ["auth_key_id"], name: "index_notifications_on_auth_key_id", using: :btree
+  add_index "notifications", ["device_id"], name: "index_notifications_on_device_id", using: :btree
+  add_index "notifications", ["pushed_at"], name: "index_notifications_on_pushed_at", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

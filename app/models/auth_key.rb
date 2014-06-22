@@ -10,6 +10,11 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
+# Indexes
+#
+#  index_auth_keys_on_application_id  (application_id)
+#  index_auth_keys_on_environment_id  (environment_id)
+#
 
 class AuthKey < ActiveRecord::Base
   

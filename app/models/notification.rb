@@ -18,6 +18,12 @@
 #  custom_data       :text
 #  error_code        :integer
 #
+# Indexes
+#
+#  index_notifications_on_auth_key_id  (auth_key_id)
+#  index_notifications_on_device_id    (device_id)
+#  index_notifications_on_pushed_at    (pushed_at)
+#
 
 class Notification < ActiveRecord::Base
   
