@@ -66,7 +66,7 @@ module ApnsProxy
               connection.open
             end
           rescue OpenSSL::PKey::RSAError
-            puts "----> Invalid certificate/key has been provided for the environment".red
+            puts "----> Invalid certificate/key has been provided for the environment"
             connections[notification.auth_key.environment.id] = nil
             notification.mark_as_failed!(3000)
             next
@@ -86,14 +86,14 @@ module ApnsProxy
           # Check the notification is valid
           #
           unless notification.valid?
-            puts "[N#{notification.id.to_s.rjust(7, '0')}] Could not be sent as it was not valid.".yellow
+            puts "[N#{notification.id.to_s.rjust(7, '0')}] Could not be sent as it was not valid."
             notification.mark_as_failed!(1000)
             next
           end
           
           begin
             
-            puts "[N#{notification.id.to_s.rjust(7, '0')}] Sending using connection #{notification.auth_key.environment.id} (#{notification.auth_key.environment.name} for #{notification.auth_key.environment.application.name})".green
+            puts "[N#{notification.id.to_s.rjust(7, '0')}] Sending using connection #{notification.auth_key.environment.id} (#{notification.auth_key.environment.name} for #{notification.auth_key.environment.application.name})"
             
             # 
             # Write this message to the service
@@ -131,7 +131,7 @@ module ApnsProxy
             # we haven't read the error. This shouldn't happen very often but catching
             # it will avoid needing to restart all connections when one is closed.
             #
-            puts "Pipe was closed. Marking connection as closed.".red
+            puts "Pipe was closed. Marking connection as closed."
             connection.close
           end
           
@@ -167,7 +167,7 @@ module ApnsProxy
               # notification therefore we don't need to do anything other than resend future
               # notifications.
               #
-              puts "[N#{failed_notification.id.to_s.rjust(7, '0')}] Marking notification as failed (command: #{command} status: #{status})".yellow
+              puts "[N#{failed_notification.id.to_s.rjust(7, '0')}] Marking notification as failed (command: #{command} status: #{status})"
               failed_notification.mark_as_failed!(status)
             end
             
@@ -207,17 +207,17 @@ module ApnsProxy
       # Apple won't like repeated connections to their service so we'll only do 
       # this for a maximum of 5 times then we'll die as something is up.
       #
-      puts "An error occurred: #{e.exception.class} (#{e.message})".red
+      puts "An error occurred: #{e.exception.class} (#{e.message})"
       puts e.backtrace
       @retries ||= 1
       if @retries >= 5
-        puts "---> Re-raising the error after #{@retries} retries. Sorry - don't blame me.".red
+        puts "---> Re-raising the error after #{@retries} retries. Sorry - don't blame me."
         raise
       else
         puts "---> Closing all conncetions".red
         connections.each { |_,c| c.close }
         connections = {}
-        puts "---> Waiting 30 seconds before retrying the worker loop from scratch".red
+        puts "---> Waiting 30 seconds before retrying the worker loop from scratch"
         sleep 30
         @retries  += 1
         retry        
