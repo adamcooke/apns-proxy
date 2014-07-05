@@ -83,6 +83,14 @@ a { color:#0898d4;}
 			tbody tr td.empty { text-align:center; padding:30px 100px; font-style:italic; color:#999;  line-height:1.6;}
 		}
 		
+		nav.pagination {
+		  text-align:center;
+		  margin-top:25px;
+		  font-size:1.1em;
+		  span.current, a { display:inline-block; border:1px solid #ccc; padding:2px 8px; text-decoration:none; background:#EAF2F5; color:#333;}
+		  span.current { color:#999;}
+		}	
+			
 		dl.info {
 			margin:15px 0;
 			dt { float:left; width:140px;  font-weight:bold;}

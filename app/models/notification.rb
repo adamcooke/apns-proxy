@@ -54,8 +54,12 @@ class Notification < ActiveRecord::Base
       errors.add :badge, "missing"
     end
     
-    if device.unsubscribed?
-      errors.add :device, "unsubscribed"
+    if device 
+      if device.unsubscribed?
+        errors.add :device, "unsubscribed"
+      end
+    else
+      errors.add :device, "missing"
     end
   end
   

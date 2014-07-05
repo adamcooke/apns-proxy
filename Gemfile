@@ -12,11 +12,10 @@ gem 'houston', '~> 2.0'
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'nilify_blanks'
 gem 'annotate'
-gem 'kaminari'
+gem 'kaminari', '~> 0.16.1'
 gem 'haml', '~> 4.0'
 gem 'dynamic_form', '~> 1.1'
 gem 'nifty-utils', '~> 1.0'
-
 
 group :development do
   gem 'spring'

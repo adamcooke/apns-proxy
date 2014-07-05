@@ -3,3 +3,4 @@
 
 = render 'table', :notifications => @notifications, :empty_message => 'There are no notifications for this application. Notifications can only be added using the API in conjunction with an auth key.'
 
+= paginate @notifications

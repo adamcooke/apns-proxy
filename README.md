@@ -74,7 +74,7 @@ identifier.
 POST /api/notify
 ```
 
-* `auth_token` - your auth token (string, required)
+* `auth_key` - your auth key (string, required)
 * `device` - the device identifier (string, required)
 * `notification.alert.body` - the text body for your notification (string)
 * `notification.alert.action_loc_key` - localization key for your action button (string)
@@ -119,7 +119,7 @@ blocked by Apple.
 POST /api/register
 ```
 
-* `auth_token` - your auth token (string, required)
+* `auth_key` - your auth key (string, required)
 * `device` - the device identifier (string, required)
 
 You will always receive a `200 OK` from this message with a response body 

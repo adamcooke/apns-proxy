@@ -18,3 +18,4 @@
   
 %h3 Notifications
 = render 'notifications/table', :notifications => @notifications, :empty_message => 'This device has been sent no notifications.'
+= paginate @notifications
