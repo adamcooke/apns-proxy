@@ -12,7 +12,7 @@
   %dt Total Notifications
   %dd= @device.usage
   %dt Last Notification
-  %dd= @device.last_used_at ? @device.last_used_at.to_s(:long) : 'Not used'
+  %dd= @device.last_sent_notification_at ? @device.last_sent_notification_at.to_s(:long) : 'Not used'
   %dt Un-subscribed at
   %dd= @device.unsubscribed_at ? @device.unsubscribed_at.to_s(:long) : 'Not un-subscribed'
   
