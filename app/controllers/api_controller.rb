@@ -29,10 +29,12 @@ class ApiController < ApplicationController
   
   def register
     device = @auth_key.devices.where(:token => @payload[:device]).first
-    if device
-      device.last_registered_at = Time.now
-      device.save!
+    if device.nil?
+      device = @auth_key.devices.build(:token => @payload[:device])
     end
+    device.label = @payload[:label] if @payload.keys.include?('label')
+    device.last_registered_at = Time.now
+    device.save!
     json({:status => 'ok', :device => device ? device.id : nil}, 200)
   end
   

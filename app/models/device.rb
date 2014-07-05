@@ -10,6 +10,7 @@
 #  unsubscribed_at           :datetime
 #  created_at                :datetime
 #  last_registered_at        :datetime
+#  label                     :string(255)
 #
 # Indexes
 #

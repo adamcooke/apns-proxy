@@ -121,6 +121,7 @@ POST /api/register
 
 * `auth_key` - your auth key (string, required)
 * `device` - the device identifier (string, required)
+* `label` - a label to identified this device in the admin UI (string)
 
 You will always receive a `200 OK` from this message with a response body 
 similar to that shown below:
@@ -131,11 +132,6 @@ similar to that shown below:
   "status": "ok"
 }
 ```
-
-In some cases, `device` will be null. This means that the device identifier 
-you have provided has not yet been sent any notifications. This is nothing
-to worry about as a device is officially only registered in the database when
-it is first sent a notification.
 
 ## Licence
 

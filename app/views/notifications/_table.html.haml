@@ -1,11 +1,11 @@
 %table.data
   %thead
     %tr
-      %td{:width => '7%'} ID
+      %td{:width => '10%'} ID
       %td{:width => '15%'} Time
-      %td{:width => '25%'} Auth Key
-      %td{:width => '10%'} Status
-      %td{:width => '40%'} Description
+      %td{:width => '30%'} Auth Key
+      %td{:width => '15%'} Status
+      %td{:width => '30%'} Device
   %tbody
     - if notifications.empty?
       %tr
@@ -17,4 +17,4 @@
           %td= notification.created_at.to_s(:short)
           %td= notification.auth_key.name
           %td= notification.pushed_at ? 'Sent' : notification.error_code
-          %td= notification.description
+          %td= link_to notification.device.label || 'Unidentified Device', [notification.device]

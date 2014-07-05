@@ -5,7 +5,7 @@
 
 %dl.info
   %dt Device
-  %dd= link_to @notification.device.token, @notification.device
+  %dd= link_to @notification.device.label.blank? ? @notification.device.token : @notification.device.label  , @notification.device
   %dt Auth Key
   %dd= link_to @notification.auth_key.name, [:edit, @application, @notification.auth_key]
   %dt Environment

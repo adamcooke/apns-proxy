@@ -7,8 +7,12 @@
   %dd= link_to @device.auth_key.name, [:edit, @device.auth_key.application, @device.auth_key]
   %dt Environment
   %dd= link_to @device.auth_key.environment.name, [:edit, @device.auth_key.application, @device.auth_key.environment]
+  %dt Token
+  %dd= @device.token
   %dt First Seen
   %dd= @device.created_at.to_s(:long)
+  %dt Label
+  %dd= @device.label.blank? ? 'Unidentified Device' : @device.label
   %dt Total Notifications
   %dd= @device.usage
   %dt Last Notification
