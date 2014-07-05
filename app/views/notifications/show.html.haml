@@ -16,27 +16,27 @@
   %dt Pushed at
   %dd= @notification.pushed_at ? @notification.pushed_at.to_s(:long) : 'Not pushed yet'
   %dt Error Code
-  %dd= @notification.error_code ? Notification::ERROR_CODES[@notification.error_code].to_s.humanize || "Unknown error (#{@notification.error_code})" : 'No error code'
+  %dd= @notification.error_code ? Notification::ERROR_CODES[@notification.error_code].to_s.humanize || "Unknown error (#{@notification.error_code})" :  '&nbsp;'.html_safe
   
 %h3 Alert Details
 %dl.info  
   %dt Body
-  %dd= @notification.alert_body
+  %dd= @notification.alert_body || '&nbsp;'.html_safe
   %dt Action Loc. Key
-  %dd= @notification.action_loc_key || 'None specified'
+  %dd= @notification.action_loc_key || '&nbsp;'.html_safe
   %dt Loc. Key
-  %dd= @notification.loc_key || 'None specified'
+  %dd= @notification.loc_key || '&nbsp;'.html_safe
   %dt Loc. Args
-  %dd= @notification.loc_args || 'None specified'
+  %dd= @notification.loc_args || '&nbsp;'.html_safe
   %dt Launch Image
-  %dd= @notification.launch_image || 'None specified'
+  %dd= @notification.launch_image || '&nbsp;'.html_safe
 
 %h3 Sound Details
 %dl.info
   %dt Sound 
-  %dd= @notification.sound || 'No sound file specified'
+  %dd= @notification.sound || '&nbsp;'.html_safe
 
 %h3 Badge Details
 %dl.info
   %dt Badge
-  %dd= @notification.badge || 'No badge update specified'
+  %dd= @notification.badge || '&nbsp;'.html_safe
