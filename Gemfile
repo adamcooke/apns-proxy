@@ -21,3 +21,8 @@ gem 'nifty-utils', '~> 1.0'
 group :development do
   gem 'spring'
 end
+
+group :production do
+  gem 'rails_serve_static_assets'
+  gem 'rails_stdout_logging'
+end
