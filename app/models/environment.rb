@@ -76,7 +76,7 @@ class Environment < ActiveRecord::Base
       devices = environment.devices_to_unsubscribe
       puts "Found #{devices.size} device(s) to unsubscribe..."
       devices.each do |details|
-        if device = Device.where(:auth_key_id => self.auth_keys.pluck(:id), :token => details[:token])
+        if device = Device.where(:auth_key_id => environment.auth_keys.pluck(:id), :token => details[:token])
           if device.last_registered_at > details[:timestamp]
             puts "----> No need to un-subscribe #{device.id} because it has registered since APNS unsubscribed it."
           else
