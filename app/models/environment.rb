@@ -16,7 +16,7 @@
 #
 
 class Environment < ActiveRecord::Base
-  
+
   APNS_ENVIRONMENTS = {
     :development => {
       :gateway  => "apn://gateway.sandbox.push.apple.com:2195",
@@ -27,24 +27,24 @@ class Environment < ActiveRecord::Base
       :feedback => "apn://feedback.push.apple.com:2196"
     }
   }
-  
+
   belongs_to :application
   has_many :auth_keys, :dependent => :destroy
-  
+
   validates :name, :presence => true, :length => {:maximum => 50}
   validates :apns_environment, :inclusion => {:in => APNS_ENVIRONMENTS.keys.map(&:to_s) }
   validates :certificate, :presence => true
-  
+
   scope :asc, -> { order(:name) }
-  
+
   def create_connection(type = :gateway)
     Houston::Connection.new(self.apns_environment_details[type], self.certificate, nil)
   end
-  
+
   def apns_environment_details
     APNS_ENVIRONMENTS[self.apns_environment.to_sym]
   end
-  
+
   #
   # Return an array of device IDs which should be unsubscribed because they have
   # received repeated failed messages for this application.
@@ -63,10 +63,10 @@ class Environment < ActiveRecord::Base
     end
     connection.close
     devices
-  rescue OpenSSL::PKey::RSAError
+  rescue OpenSSL::PKey::RSAError, Errno::ECONNRESET
     []
   end
-  
+
   #
   # Unsubscribe all devices which need to be un-subscribed
   #
@@ -90,5 +90,5 @@ class Environment < ActiveRecord::Base
       end
     end
   end
-  
+
 end
