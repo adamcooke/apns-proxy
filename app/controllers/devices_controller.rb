@@ -1,7 +1,6 @@
 class DevicesController < ApplicationController
 
-  before_filter { @application = Application.find(params[:application_id].to_i) }
-  before_filter { params[:id] && @notification = @application.notifications.find(params[:id].to_i) }
+  before_filter { params[:application_id] && @application = Application.find(params[:application_id].to_i) }
 
   def show
     @device = Device.find(params[:id])
