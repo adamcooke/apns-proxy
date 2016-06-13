@@ -4,5 +4,7 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
     @notifications = @device.notifications.includes(:auth_key => :environment).asc.page(params[:page])
   end
-  
+  def index
+    @devices = Device.asc
+  end
 end
