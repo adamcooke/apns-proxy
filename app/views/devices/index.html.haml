@@ -1,21 +1,7 @@
-%p.back= link_to "Back to applications", :applications
+%p.back= link_to "Back to Sirportly", @application
 %h2  Devices
-%p.intro
-  All Devices
-%table.data
-  %thead
-    %tr
-      %td{:width => '20%'} Device
-      %td{:width => '30%'} Token
-      %td{:width => '30%'} Auth Key
-      %td{:width => '5%'} Usage
-     
-  %tbody
-    - @devices.each do |device|
-      %tr
-        %td= device.label
-        %td= device.token
-        %td= device.auth_key.application.name
-        %td= device.usage
-       
 
+      
+= render 'table', :devices => @devices, :empty_message => 'There are no devices.'
+
+= paginate @devices
