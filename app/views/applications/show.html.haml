@@ -42,6 +42,21 @@
           %td= auth_key.key
           %td= auth_key.environment.try(:name) || 'None'
 %h3 Devices
-= render 'table', :devices => @devices, :empty_message => 'There are no devices.'
-
-= paginate @devices
+%table.data
+  %thead
+    %tr
+      %td{:width => '10%'} Device
+      %td{:width => '40%'} Token
+      %td{:width => '30%'} Auth Key
+      %td{:width => '10%'} Usage
+  %tbody
+    - if @devices.empty?
+      %tr
+        %td.empty{:colspan => 4} There are no device for this application.
+    - else
+      - @devices.each do |device|
+        %tr
+        %td= device.label
+        %td= device.token
+        %td= device.auth_key.name
+        %td= device.usage

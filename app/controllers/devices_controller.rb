@@ -8,6 +8,6 @@ class DevicesController < ApplicationController
     @notifications = @device.notifications.includes(:auth_key => :environment).asc.page(params[:page])
   end
   def index
-    @devices = @application.devices.asc.includes(:auth_key => :environment).page(params[:page])
+    @devices = @application.devices.asc.page(params[:page])
   end
 end
