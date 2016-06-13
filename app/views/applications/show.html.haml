@@ -3,6 +3,7 @@
 
 %ul.nav
   %li= link_to "Notifications", [@application, :notifications]
+  %li= link_to "Devices", [@application, :devices]
   %li= link_to "Edit application", [:edit, @application]
   %li= link_to "Delete application", @application, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this application?"}
   
