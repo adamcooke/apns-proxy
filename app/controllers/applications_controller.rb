@@ -9,6 +9,8 @@ class ApplicationsController < ApplicationController
   def show
     @environments = @application.environments.asc
     @auth_keys = @application.auth_keys.asc.includes(:environment)
+    @devices = @application.devices.asc
+
   end
   
   def new

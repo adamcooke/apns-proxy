@@ -1,7 +1,6 @@
 %p.back= link_to "Back to Sirportly", @application
 %h2  Devices
-
-      
+     
 = render 'table', :devices => @devices, :empty_message => 'There are no devices.'
 
 = paginate @devices
