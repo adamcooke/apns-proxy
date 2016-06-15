@@ -24,6 +24,8 @@ class Device < ActiveRecord::Base
   
   validates :auth_key_id, :presence => true
   validates :token, :presence => true
+
+  scope :asc, -> { order(:label) }
   
   def unsubscribed?
     !!unsubscribed_at

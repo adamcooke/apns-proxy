@@ -41,4 +41,24 @@
           %td= link_to auth_key.name, [:edit, @application, auth_key]
           %td= auth_key.key
           %td= auth_key.environment.try(:name) || 'None'
-%p.add= link_to "Add an auth key", [:new, @application, :auth_key], :class => 'button'
+%h3 Devices
+%table.data
+  %thead
+    %tr
+      %td{:width => '5%'} ID
+      %td{:width => '10%'} Device
+      %td{:width => '40%'} Token
+      %td{:width => '25%'} Auth Key
+      %td{:width => '10%'} Usage
+  %tbody
+    - if @devices.empty?
+      %tr
+        %td.empty{:colspan => 5} There are no device for this application.
+    - else
+      - @devices.each do |device|
+        %tr
+        %td= device.id
+        %td= link_to device.label || 'Unidentified Device', [device]
+        %td= device.token
+        %td= device.auth_key.name
+        %td= device.usage

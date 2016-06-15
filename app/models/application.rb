@@ -13,8 +13,9 @@ class Application < ActiveRecord::Base
   has_many :environments, :dependent => :destroy
   has_many :auth_keys, :dependent => :destroy
   has_many :notifications, :through => :auth_keys
+  has_many :devices, :through => :auth_keys
   
-  validates :name, :presence => true, :length => {:maximum => 100}
+ validates :name, :presence => true, :length => {:maximum => 100}
   
   scope :asc, -> { order(:name) }
   
