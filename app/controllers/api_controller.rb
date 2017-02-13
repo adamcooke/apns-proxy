@@ -34,6 +34,7 @@ class ApiController < ApplicationController
     end
     device.label = @payload[:label] if @payload.keys.include?('label')
     device.last_registered_at = Time.now
+    device.unsubscribed_at = nil
     if device.save
       json({:status => 'ok', :device => device ? device.id : nil}, 200)
     else

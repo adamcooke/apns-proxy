@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140705102837) do
+ActiveRecord::Schema.define(version: 20170213114403) do
 
-  create_table "applications", force: true do |t|
-    t.string   "name"
+  create_table "applications", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "auth_keys", force: true do |t|
-    t.integer  "application_id"
-    t.string   "name"
-    t.string   "key"
-    t.integer  "environment_id"
+  create_table "auth_keys", force: :cascade do |t|
+    t.integer  "application_id", limit: 4
+    t.string   "name",           limit: 255
+    t.string   "key",            limit: 255
+    t.integer  "environment_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,57 +31,60 @@ ActiveRecord::Schema.define(version: 20140705102837) do
   add_index "auth_keys", ["application_id"], name: "index_auth_keys_on_application_id", using: :btree
   add_index "auth_keys", ["environment_id"], name: "index_auth_keys_on_environment_id", using: :btree
 
-  create_table "devices", force: true do |t|
-    t.integer  "auth_key_id"
-    t.string   "token"
-    t.integer  "usage",                     default: 0
+  create_table "devices", force: :cascade do |t|
+    t.integer  "auth_key_id",               limit: 4
+    t.string   "token",                     limit: 255
+    t.integer  "usage",                     limit: 4,   default: 0
     t.datetime "last_sent_notification_at"
     t.datetime "unsubscribed_at"
     t.datetime "created_at"
     t.datetime "last_registered_at"
-    t.string   "label"
+    t.string   "label",                     limit: 255
   end
 
   add_index "devices", ["auth_key_id"], name: "index_devices_on_auth_key_id", using: :btree
 
-  create_table "environments", force: true do |t|
-    t.integer  "application_id"
-    t.string   "name"
-    t.text     "certificate"
+  create_table "environments", force: :cascade do |t|
+    t.integer  "application_id",   limit: 4
+    t.string   "name",             limit: 255
+    t.text     "certificate",      limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "apns_environment"
+    t.string   "apns_environment", limit: 255
+    t.string   "topic",            limit: 255
   end
 
   add_index "environments", ["application_id"], name: "index_environments_on_application_id", using: :btree
 
-  create_table "notifications", force: true do |t|
-    t.integer  "auth_key_id"
-    t.integer  "device_id"
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "auth_key_id",       limit: 4
+    t.integer  "device_id",         limit: 4
     t.datetime "pushed_at"
     t.datetime "created_at"
-    t.string   "alert_body"
-    t.string   "action_loc_key"
-    t.string   "loc_key"
-    t.text     "loc_args"
-    t.string   "launch_image"
-    t.integer  "badge"
-    t.string   "sound"
+    t.string   "alert_body",        limit: 255
+    t.string   "action_loc_key",    limit: 255
+    t.string   "loc_key",           limit: 255
+    t.text     "loc_args",          limit: 65535
+    t.string   "launch_image",      limit: 255
+    t.integer  "badge",             limit: 4
+    t.string   "sound",             limit: 255
     t.boolean  "content_available"
-    t.text     "custom_data"
-    t.integer  "error_code"
-    t.boolean  "locked",            default: false
+    t.text     "custom_data",       limit: 65535
+    t.integer  "error_code",        limit: 4
+    t.boolean  "locked",                          default: false
+    t.string   "status_code",       limit: 255
+    t.string   "status_reason",     limit: 255
   end
 
   add_index "notifications", ["auth_key_id"], name: "index_notifications_on_auth_key_id", using: :btree
   add_index "notifications", ["device_id"], name: "index_notifications_on_device_id", using: :btree
   add_index "notifications", ["pushed_at"], name: "index_notifications_on_pushed_at", using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "password_digest"
-    t.string   "name"
-    t.string   "email_address"
+  create_table "users", force: :cascade do |t|
+    t.string   "username",        limit: 255
+    t.string   "password_digest", limit: 255
+    t.string   "name",            limit: 255
+    t.string   "email_address",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

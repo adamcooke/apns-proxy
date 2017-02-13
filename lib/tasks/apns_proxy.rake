@@ -1,15 +1,10 @@
 namespace :apns_proxy do
-  
+
   desc 'Deliver notifications from the cache to APNS'
   task :worker => :environment do
-    ApnsProxy::Worker.run
+    ApnsProxy::Worker.new.run
   end
-  
-  desc 'Unsubscribe all devices'
-  task :unsubscribe => :environment do
-    Environment.unsubscribe_devices
-  end
-  
+
   desc 'Setup the initial admin user'
   task :setup => :environment do
     if User.all.empty?
@@ -24,5 +19,5 @@ namespace :apns_proxy do
       puts "Your database already has users in it therefore there's no need to setup."
     end
   end
-  
+
 end

@@ -4,16 +4,22 @@
     %dt= f.label :name
     %dd
       = f.text_field :name, :class => 'focus'
-      .info 
+      .info
         %p It is recommended to use a name such as 'Release', 'Debug' or 'Beta' for your environment.
     %dt= f.label :apns_environment, "APNS Environment"
     %dd.select
-      = f.select :apns_environment, Environment::APNS_ENVIRONMENTS.map { |e,v| ["#{e.to_s.humanize} - #{v[:gateway]}", e.to_s]}
+      = f.select :apns_environment, Environment::APNS_ENVIRONMENTS.map { |e| [e.humanize, e] }
       .info
         %p
           Select which APNS environment should be used. For development applications you should select
           <b>Development</b> enter your development certificate below. For production application, select <b>Production</b>
           and enter your production certificate below.
+    %dt= f.label :topic
+    %dd
+      = f.text_field :topic
+      .info
+        %p The name of the the topic. This is usually your application's Bundle ID.
+
     %dt= f.label :certificate
     %dd
       = f.text_area :certificate, :spellcheck => false, :class => 'code'

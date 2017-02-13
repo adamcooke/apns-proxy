@@ -29,6 +29,11 @@ class Device < ActiveRecord::Base
     !!unsubscribed_at
   end
 
+  def unsubscribe!
+    self.unsubscribed_at = Time.now
+    self.save!
+  end
+
   def self.touch_device(auth_key, token)
     device = self.where(:auth_key_id => auth_key.id, :token => token).first
     if device.nil?

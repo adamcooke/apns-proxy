@@ -16,6 +16,8 @@ gem 'kaminari', '~> 0.16.1'
 gem 'haml', '~> 4.0'
 gem 'dynamic_form', '~> 1.1'
 gem 'nifty-utils', '~> 1.0'
+gem 'bunny'
+gem 'apnotic'
 
 group :production do
   gem 'rails_serve_static_assets'

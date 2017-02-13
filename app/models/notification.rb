@@ -28,24 +28,10 @@
 
 class Notification < ActiveRecord::Base
 
-  ERROR_CODES = {
-    1000  => :invalid,
-    2000  => :expired,
-    3000  => :invalid_certificate,
-    1     => :apns_processing_error,
-    2     => :apns_missing_device_token,
-    3     => :apns_missing_topic,
-    4     => :apns_missing_payload,
-    5     => :apns_invalid_token_size,
-    6     => :apns_invalid_topic_size,
-    7     => :apns_invalid_payload_size,
-    8     => :apns_invalid_token,
-    10    => :apns_shutdown,
-    255   => :apns_unknown
-  }
-
   belongs_to :auth_key
   belongs_to :device
+
+  after_create :publish
 
   validate do
     if !has_alert? && self.sound.nil? && self.badge.nil?
@@ -64,8 +50,6 @@ class Notification < ActiveRecord::Base
   end
 
   scope :asc, -> { order(:id => :desc) }
-  scope :requires_pushing, -> { where(:pushed_at => nil, :error_code => nil).order(:id) }
-  scope :unlocked, -> { where(:locked => false) }
 
   #
   # Has this been pushed?
@@ -75,28 +59,11 @@ class Notification < ActiveRecord::Base
   end
 
   #
-  # Mark as resendable
-  #
-  def mark_as_repushable!
-    self.pushed_at = nil
-    self.error_code = nil
-    self.locked = false
-    self.save!
-  end
-
-  #
   # Mark this notification as pushed
   #
   def mark_as_pushed!
+    self.status_code = 200
     self.pushed_at = Time.now
-    self.save!
-  end
-
-  #
-  # Mark this notification as failed
-  #
-  def mark_as_failed!(error_code)
-    self.error_code = error_code
     self.save!
   end
 
@@ -164,8 +131,8 @@ class Notification < ActiveRecord::Base
       h[:created_at] = self.created_at
 
       h[:notification] = {}
-      h[:notification][:sound] = self.sound if self.sound
-      h[:notification][:badge] = self.badge if self.badge
+      h[:notification][:sound] = self.sound if self.has_sound?
+      h[:notification][:badge] = self.badge if self.has_badge?
 
       if self.has_alert?
         h[:notification][:alert] = {}
@@ -181,42 +148,10 @@ class Notification < ActiveRecord::Base
   end
 
   #
-  # Return notification as Houston Notification object
+  # Send the notification
   #
-  def to_houston_notification
-    n = Houston::Notification.new(:device => self.device.token)
-    n.id = self.id
-
-    if has_alert?
-      if present_alert_as_hash?
-        n.alert = {}
-        n.alert['body'] = self.alert_body                 if self.alert_body
-        n.alert['action-loc-key'] = self.action_loc_key   if self.action_loc_key
-        n.alert['loc-key'] = self.loc_key                 if self.loc_key
-        n.alert['loc-args'] = JSON.parse(self.loc_args)   if self.loc_args
-        n.alert['launch-image'] = self.launch_image       if self.launch_image
-      else
-        n.alert = self.alert_body
-      end
-    end
-
-    if has_sound?
-      n.sound = self.sound
-    end
-
-    if has_badge?
-      n.badge = self.badge
-    end
-
-    unless n.content_available.nil?
-      n.content_available = self.content_available
-    end
-
-    if self.custom_data
-      n.custom_data = JSON.parse(custom_data)
-    end
-
-    n
+  def publish
+    ApnsProxy::RabbitMq.queue.publish(to_hash.to_json, :persistent => true)
   end
 
   #
@@ -261,6 +196,30 @@ class Notification < ActiveRecord::Base
       end
     end
 
+    n
+  end
+
+  def apnotic_notification
+    n = Apnotic::Notification.new(self.device.token)
+    n.topic = self.auth_key.environment.topic
+
+    if self.badge
+      n.badge = self.badge
+    end
+
+    if self.sound
+      n.sound = self.sound
+    end
+
+    if has_alert?
+      n.alert = {}
+      n.alert[:body]            = self.alert_body                 if self.alert_body
+      n.alert[:action_loc_key]  = self.action_loc_key             if self.action_loc_key
+      n.alert[:loc_key]         = self.loc_key                    if self.loc_key
+      n.alert[:loc_args]        = self.loc_args                   if self.loc_args
+      n.alert[:launch_image]    = self.launch_image               if self.launch_image
+    end
+    n.custom_payload           = JSON.parse(self.custom_data)   if self.custom_data
     n
   end
 

@@ -15,11 +15,13 @@
 %dl.info
   %dt Pushed at
   %dd= @notification.pushed_at ? @notification.pushed_at.to_s(:long) : 'Not pushed yet'
-  %dt Error Code
-  %dd= @notification.error_code ? Notification::ERROR_CODES[@notification.error_code].to_s.humanize || "Unknown error (#{@notification.error_code})" :  '&nbsp;'.html_safe
-  
+  %dt Status Code
+  %dd= @notification.status_code || '&nbsp;'.html_safe
+  %dt Status Reason
+  %dd= @notification.status_reason || '&nbsp;'.html_safe
+
 %h3 Alert Details
-%dl.info  
+%dl.info
   %dt Body
   %dd= @notification.alert_body || '&nbsp;'.html_safe
   %dt Action Loc. Key
@@ -33,7 +35,7 @@
 
 %h3 Sound Details
 %dl.info
-  %dt Sound 
+  %dt Sound
   %dd= @notification.sound || '&nbsp;'.html_safe
 
 %h3 Badge Details
