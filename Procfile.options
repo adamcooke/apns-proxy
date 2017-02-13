@@ -1,0 +1,3 @@
+app_name: apns-proxy
+pid_root: tmp/procodile-pids
+log_path: log/procodile.log
