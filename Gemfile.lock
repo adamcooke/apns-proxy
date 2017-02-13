@@ -104,7 +104,6 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
-    spring (1.1.3)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -147,9 +146,8 @@ DEPENDENCIES
   rails_serve_static_assets
   rails_stdout_logging
   sass-rails (~> 4.0.3)
-  spring
   thin
   uglifier (>= 1.3.0)
 
 BUNDLED WITH
-   1.10.6
+   1.13.7
