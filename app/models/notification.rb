@@ -33,7 +33,7 @@ class Notification < ActiveRecord::Base
 
   after_create :publish
 
-  validate do
+  validate(:on => :create) do
     if !has_alert? && self.sound.nil? && self.badge.nil?
       errors.add :alert, "missing"
       errors.add :sound, "missing"
