@@ -1,7 +1,7 @@
 # APNS Proxy
 
 This is a Rails application which orchestrates the sending of push notifications
-from applications to the Apple Push Notification Service (APNS). Rather than 
+from applications to the Apple Push Notification Service (APNS). Rather than
 individual applications talking to APNS directly, they send an HTTP request to
 this service which maintains a connection to the APNS service and delivers
 the notification down this persistent connection.
@@ -12,6 +12,12 @@ the notification down this persistent connection.
 * Keep track of the notifications sent.
 * Monitors for device unsubscriptions and alerts the sending application next
   time it tries to send a message.
+
+## Requirements
+
+* A MySQL database server
+* A RabbitMQ server
+* Ruby 2.3 or above
 
 ## Installation
 
@@ -35,25 +41,21 @@ The default username is **admin** and the default password is **password**.
 * **Web Server** - you should run the web server to provide an admin interface
   as well as the HTTP API service used for sending notifications. This runs
   continuously.
-  
+
   ```
   rails server
   ```
-  
-* **Worker** - the worker is responsible for sending notifications from the 
+
+* **Worker** - the worker is responsible for sending notifications from the
   local system to the APNS backend. This runs continuously.
-  
+
   ```
   rake apns_proxy:worker
   ```
 
-* **Unsubscriber** - this runs on a daily basis and gets a list of device 
-  which APNS has detected as no longer having the application installed. This
-  information is then used to mark a device as unsubscribed.
-  
-  ```
-  rake apns_proxy:unsubscribe
-  ```
+There is a `Procfile` provided so APNS Proxy can be run on services like [Viaduct](https://viaduct.io)
+and Heroku but can also be executed using process managers like [Procodile](https://github.com/adamcooke/procodile)
+and Foreman.
 
 ## API Methods
 
@@ -94,10 +96,10 @@ error code.
 When you submit this, you will receive either a `201 Created` status which
 means that your notification was added and delivery will be attempted. If there
 is an error, you'll receive a `422 Unprocessable Entity` status and the response
-body will contain an array of `errors`. 
+body will contain an array of `errors`.
 
 The most significant thing to look out for is information that a device you
-are sending notifications for has been unsubscribed. Such an issue will look 
+are sending notifications for has been unsubscribed. Such an issue will look
 this like in the response body:
 
 ```javascript
@@ -123,7 +125,7 @@ POST /api/register
 * `device` - the device identifier (string, required)
 * `label` - a label to identified this device in the admin UI (string)
 
-You will always receive a `200 OK` from this message with a response body 
+You will always receive a `200 OK` from this message with a response body
 similar to that shown below:
 
 ```javascript
