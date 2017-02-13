@@ -12,7 +12,7 @@ module ApnsProxy
       channel = ApnsProxy::RabbitMq.create_channel
       channel.prefetch(1)
       queue = channel.queue("apnsproxy-notifications", :durable => true, :arguments => {'x-message-ttl' => 120000})
-      puts "Connected"
+      puts "Started APNS Proxy worker"
       queue.subscribe(:manual_ack => true) do |delivery_info, properties, body|
         begin
           $running_job = true
