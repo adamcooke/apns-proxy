@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.13'
+gem 'rails', '4.2.7.1'
 gem 'mysql2'
 gem 'thin'
 gem 'sass-rails', '~> 4.0.3'
