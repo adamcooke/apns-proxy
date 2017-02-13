@@ -5,13 +5,14 @@
   %li= link_to "Notifications", [@application, :notifications]
   %li= link_to "Edit application", [:edit, @application]
   %li= link_to "Delete application", @application, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this application?"}
-  
+
 
 %h3 Environments
 %table.data
   %thead
-    %td Name
-    %td APNS Env.
+    %td{:width => "40%"} Name
+    %td{:width => "20%"} APNS Env.
+    %td{:width => "40%"} Expiry Date
   %tbody
     - if @environments.empty?
       %tr
@@ -21,6 +22,7 @@
         %tr
           %td= link_to environment.name, [:edit, @application, environment]
           %td= environment.apns_environment.humanize
+          %td= environment.certificate_expiry_date ? environment.certificate_expiry_date.to_s(:long) : nil
 %p.add= link_to "Add an environment", [:new, @application, :environment], :class => 'button'
 
 

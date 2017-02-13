@@ -33,4 +33,14 @@ class Environment < ActiveRecord::Base
     apns_environment == 'development'
   end
 
+  def certificate_expiry_date
+    if self.certificate
+      @expiry ||= begin
+        c = OpenSSL::X509::Certificate.new(self.certificate)
+        c.not_after
+      end
+    end
+  rescue OpenSSL::X509::CertificateError
+  end
+
 end
