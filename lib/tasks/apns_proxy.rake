@@ -5,6 +5,11 @@ namespace :apns_proxy do
     ApnsProxy::Worker.new.run
   end
 
+  desc 'Tidy notifications'
+  task :tidy_notifications => :environment do
+    Notification.tidy
+  end
+
   desc 'Setup the initial admin user'
   task :setup => :environment do
     if User.all.empty?
