@@ -223,5 +223,11 @@ class Notification < ActiveRecord::Base
     n
   end
 
+  def self.tidy(max_age_to_keep = 30.days)
+    if oldest = self.where("created_at < ?", max_age_to_keep.ago).last
+      where("id <= #{oldest.id}").delete_all
+    end
+  end
+
 end
 
