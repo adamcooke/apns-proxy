@@ -17,21 +17,21 @@
 #
 
 class AuthKey < ActiveRecord::Base
-  
+
   belongs_to :application
   belongs_to :environment
   has_many :notifications, :dependent => :destroy
   has_many :devices, :dependent => :destroy
-  
+
   validates :application_id, :presence => true
   validates :environment_id, :presence => true
   validates :name, :presence => true, :length => {:maximum => 100}
   validates :key, :presence => true, :uniqueness => true
-  
+
   scope :asc, -> { order(:name) }
-  
+
   before_validation :generate_unique_key
-  
+
   def generate_unique_key
     while self.key.blank?
       proposed_key = SecureRandom.uuid
@@ -40,9 +40,9 @@ class AuthKey < ActiveRecord::Base
       end
     end
   end
-  
+
   def touch_device(token)
     Device.touch_device(self, token)
   end
-  
+
 end
