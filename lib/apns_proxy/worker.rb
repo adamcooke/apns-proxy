@@ -70,6 +70,9 @@ module ApnsProxy
           sleep 1
         end
       end
+    rescue => e
+      puts "Error: #{e.class.name}: #{e.message}"
+      puts e.backtrace
     end
 
     private
