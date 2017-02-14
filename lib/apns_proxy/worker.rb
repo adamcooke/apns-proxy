@@ -73,6 +73,7 @@ module ApnsProxy
     rescue => e
       puts "Error: #{e.class.name}: #{e.message}"
       puts e.backtrace
+      channel.close rescue nil
       retry
     end
 
