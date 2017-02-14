@@ -24,7 +24,7 @@ module ApnsProxy
                 notification.mark_as_pushed!
                 puts "[N#{notification.id}] Sent successfully"
               else
-                if response.status == '400' && response.body['reason'] == 'BadDeviceToken'
+                if response.status == '410' || (response.status == '400' && response.body['reason'] == 'BadDeviceToken')
                   notification.device.unsubscribe!
                 end
                 notification.status_code = response.status
