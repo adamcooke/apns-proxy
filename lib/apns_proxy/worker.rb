@@ -71,12 +71,6 @@ module ApnsProxy
           sleep 1
         end
       end
-    rescue => e
-      puts "Error: #{e.class.name}: #{e.message}"
-      puts e.backtrace
-      channel.close rescue nil
-      @connection_pool = {}
-      retry
     end
 
     private
