@@ -13,6 +13,7 @@ module ApnsProxy
       channel.prefetch(1)
       queue = channel.queue("apnsproxy-notifications", :durable => true, :arguments => {'x-message-ttl' => 120000})
       puts "Started APNS Proxy worker"
+
       queue.subscribe(:manual_ack => true) do |delivery_info, properties, body|
         begin
           $running_job = true
@@ -74,6 +75,7 @@ module ApnsProxy
       puts "Error: #{e.class.name}: #{e.message}"
       puts e.backtrace
       channel.close rescue nil
+      @connection_pool = {}
       retry
     end
 
