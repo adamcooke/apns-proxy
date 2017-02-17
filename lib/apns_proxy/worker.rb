@@ -7,8 +7,8 @@ module ApnsProxy
     def run
       trap("SIGINT") { puts "Exiting..." ; Process.exit(0) }
       trap("SIGTERM") { puts "Exiting..." ; Process.exit(0) }
+      puts "Started APNS Proxy worker"
       loop do
-        puts "Started APNS Proxy worker"
         start_environment_threads
         sleep 5
       end
