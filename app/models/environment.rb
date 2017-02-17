@@ -43,4 +43,17 @@ class Environment < ActiveRecord::Base
   rescue OpenSSL::X509::CertificateError
   end
 
+  def queue
+    @queue ||= ApnsProxy::RabbitMq.channel.queue("apnsproxy-notifications-#{id}", :durable => true, :arguments => {'x-message-ttl' => 120000})
+  end
+
+  def create_apnotic_connection
+    cert = StringIO.new(self.certificate)
+    if self.development?
+      Apnotic::Connection.development(:cert_path => cert)
+    else
+      Apnotic::Connection.new(:cert_path => cert)
+    end
+  end
+
 end

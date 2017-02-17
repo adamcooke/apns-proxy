@@ -151,7 +151,9 @@ class Notification < ActiveRecord::Base
   # Send the notification
   #
   def publish
-    ApnsProxy::RabbitMq.queue.publish(to_hash.to_json, :persistent => true)
+    ApnsProxy::RabbitMq.with_queue("apnsproxy-notifications-#{auth_key.environment_id}") do |queue|
+      queue.publish(to_hash.to_json, :persistent => true)
+    end
   end
 
   #
