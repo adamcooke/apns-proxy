@@ -10,6 +10,8 @@
   %dd= link_to @notification.auth_key.name, [:edit, @application, @notification.auth_key]
   %dt Environment
   %dd= link_to @notification.auth_key.environment.name, [:edit, @application, @notification.auth_key.environment]
+  %dt Resend
+  %dd= link_to "Resend Notification", [:resend, @application, @notification], :method => :post
 
 %h3 Delivery Status
 %dl.info

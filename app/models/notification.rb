@@ -155,6 +155,19 @@ class Notification < ActiveRecord::Base
   end
 
   #
+  # Resend the same notification
+  #
+  def resend
+    new_notification = self.class.new
+    attrs_to_copy = ['auth_key_id', 'device_id', 'alert_body', 'action_loc_key', 'loc_key', 'loc_args', 'launch_image', 'badge', 'sound', 'content_available', 'custom_data']
+    attrs_to_copy.each do |attr|
+      new_notification.send("#{attr}=", self.send(attr))
+    end
+    new_notification.save!
+    new_notification
+  end
+
+  #
   # Build a new payload from the data expected from an API call
   #
   def self.build_from_payload(auth_key, payload)
