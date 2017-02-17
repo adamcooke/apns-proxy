@@ -38,9 +38,12 @@
 %h3 Sound Details
 %dl.info
   %dt Sound
-  %dd= @notification.sound || '&nbsp;'.html_safe
+  %dd= @notification.sound || 'None'.html_safe
 
 %h3 Badge Details
 %dl.info
   %dt Badge
-  %dd= @notification.badge || '&nbsp;'.html_safe
+  %dd= @notification.badge || 'None'.html_safe
+
+%h3 Custom Data
+%pre= @notification.custom_data || "nil"
