@@ -40,7 +40,7 @@ class ApplicationsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:application).permit(:name)
+    params.require(:application).permit(:name, :api_key)
   end
 
 end

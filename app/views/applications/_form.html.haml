@@ -3,4 +3,6 @@
   %dl
     %dt= f.label :name
     %dd= f.text_field :name, :class => 'focus'
+    %dt= f.label :api_key, "API Key"
+    %dd= f.text_field :api_key, :placeholder => @application.new_record? ? "Automatically generated" : "API access disabled"
   %p.submit= f.submit

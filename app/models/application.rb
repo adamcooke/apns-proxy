@@ -18,6 +18,12 @@ class Application < ActiveRecord::Base
 
   scope :asc, -> { order(:name) }
 
+  before_create do
+    if self.api_key.blank?
+      self.api_key = SecureRandom.uuid
+    end
+  end
+
   after_create do
     release = self.environments.create!(:name => 'Release', :apns_environment => 'production', :topic => "com.example.app", :certificate => 'Insert your certificate here...')
     debug = self.environments.create!(:name => 'Debug', :apns_environment => 'development', :topic => "com.example.app", :certificate => 'Insert your certificate here...')
