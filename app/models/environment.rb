@@ -15,7 +15,7 @@
 #  index_environments_on_application_id  (application_id)
 #
 
-class Environment < ActiveRecord::Base
+class Environment < ApplicationRecord
 
   APNS_ENVIRONMENTS = ['development', 'production']
 

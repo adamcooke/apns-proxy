@@ -16,7 +16,7 @@
 #  index_auth_keys_on_environment_id  (environment_id)
 #
 
-class AuthKey < ActiveRecord::Base
+class AuthKey < ApplicationRecord
 
   belongs_to :application
   belongs_to :environment

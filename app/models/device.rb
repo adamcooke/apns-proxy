@@ -17,7 +17,7 @@
 #  index_devices_on_auth_key_id  (auth_key_id)
 #
 
-class Device < ActiveRecord::Base
+class Device < ApplicationRecord
 
   belongs_to :auth_key
   has_many :notifications, :dependent => :destroy
