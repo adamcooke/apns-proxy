@@ -4,5 +4,14 @@
     %dt= f.label :name
     %dd= f.text_field :name, :class => 'focus'
     %dt= f.label :api_key, "API Key"
-    %dd= f.text_field :api_key, :placeholder => @application.new_record? ? "Automatically generated" : "API access disabled"
+    %dd
+      = f.text_field :api_key, :placeholder => @application.new_record? ? "Automatically generated" : "API access disabled"
+      .info
+        %p
+          Using this API key you can manage this application remotely using the API.
+          - if @application.new_record?
+            Leave this blank for an auto generated key.
+          - else
+            Leave this blank to disable API access for this application.
+
   %p.submit= f.submit
