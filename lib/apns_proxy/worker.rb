@@ -21,12 +21,23 @@ module ApnsProxy
     end
 
     def start_environment_threads
+      acceptable_environments = []
       Environment.all.each do |environment|
+        acceptable_environments << environment.id
         if threads[environment.id].nil? || !threads[environment.id].alive?
           puts "Starting thread for environment #{environment.id}"
           threads[environment.id] = start_environment_thread(environment)
         end
       end
+
+      threads.each do |id, thread|
+        if thread.alive? && !acceptable_environments.include?(id)
+          puts "Killing thread for environment #{id}"
+          thread.kill
+        end
+      end
+
+      threads.delete_if { |_,t| !t.alive? }
     end
 
     def start_environment_thread(environment)
