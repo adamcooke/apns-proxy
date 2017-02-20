@@ -62,10 +62,14 @@ module ApnsProxy
           end
         rescue => e
           puts "Error while sending notification: #{e.class} (#{e.message})"
+          puts e.backtrace
           connection.close rescue nil
         end
       end
       loop { sleep 10 }
+    rescue => e
+      puts "Error in loop: #{e.class} (#{e.message}"
+      puts e.backtrace
     ensure
       queue.unsubscribe rescue nil
       channel.stop rescue nil
