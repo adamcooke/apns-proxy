@@ -1,6 +1,6 @@
 class ApplicationsController < ApplicationController
 
-  before_filter { params[:id] && @application = Application.find(params[:id].to_i) }
+  before_action { params[:id] && @application = Application.find(params[:id].to_i) }
 
   def index
     @applications = Application.asc

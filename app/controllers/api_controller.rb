@@ -1,9 +1,9 @@
 class ApiController < ApplicationController
 
-  skip_before_filter :verify_authenticity_token
-  skip_before_filter :login_required
+  skip_before_action :verify_authenticity_token
+  skip_before_action :login_required
 
-  before_filter do
+  before_action do
     begin
       @payload = JSON.parse(request.body.read).with_indifferent_access
     rescue

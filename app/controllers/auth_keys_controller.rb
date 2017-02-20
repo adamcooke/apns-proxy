@@ -1,7 +1,7 @@
 class AuthKeysController < ApplicationController
 
-  before_filter { @application = Application.find(params[:application_id].to_i) }
-  before_filter { params[:id] && @auth_key = @application.auth_keys.find(params[:id].to_i) }
+  before_action { @application = Application.find(params[:application_id].to_i) }
+  before_action { params[:id] && @auth_key = @application.auth_keys.find(params[:id].to_i) }
 
   def new
     @auth_key = @application.auth_keys.build

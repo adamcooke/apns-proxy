@@ -1,7 +1,7 @@
 class EnvironmentsController < ApplicationController
 
-  before_filter { @application = Application.find(params[:application_id].to_i) }
-  before_filter { params[:id] && @environment = @application.environments.find(params[:id].to_i) }
+  before_action { @application = Application.find(params[:application_id].to_i) }
+  before_action { params[:id] && @environment = @application.environments.find(params[:id].to_i) }
 
   def new
     @environment = @application.environments.build

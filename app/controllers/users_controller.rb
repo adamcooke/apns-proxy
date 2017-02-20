@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter { params[:id] && @user = User.find(params[:id].to_i) }
+  before_action { params[:id] && @user = User.find(params[:id].to_i) }
 
   def index
     @users = User.asc
