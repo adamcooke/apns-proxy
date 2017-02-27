@@ -54,7 +54,15 @@ module ApnsProxy
       connection = nil
       queue.subscribe do |delivery_info, properties, body|
         begin
-          connection ||= environment.create_apnotic_connection
+          while connection.nil?
+            connection = environment.create_apnotic_connection
+            connection.instance_variable_get("@client").on(:error) do |e|
+              puts "Got exception: #{e.class} #{e.message}"
+              puts "Resetting connection..."
+              connection.close rescue nil
+              connection = nil
+            end
+          end
           payload = JSON.parse(body)
           if notification = Notification.find_by_id(payload['id'])
             response = connection.push(notification.apnotic_notification)

@@ -18,6 +18,7 @@ gem 'dynamic_form', '~> 1.1'
 gem 'nifty-utils', '~> 1.0'
 gem 'bunny'
 gem 'apnotic'
+gem 'net-http2', :git => "https://github.com/ostinelli/net-http2", :branch => 'error_callback'
 
 group :production do
   gem 'rails_serve_static_assets'
