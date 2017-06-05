@@ -18,6 +18,7 @@ gem 'dynamic_form', '~> 1.1'
 gem 'nifty-utils', '~> 1.0'
 gem 'bunny'
 gem 'apnotic'
+gem 'figaro'
 
 group :production do
   gem 'rails_serve_static_assets'
