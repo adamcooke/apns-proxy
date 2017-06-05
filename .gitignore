@@ -19,3 +19,4 @@
 Procfile.local
 /config/database.yml
 /config/application.yml
+/public/assets
