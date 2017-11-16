@@ -31,7 +31,7 @@ class Notification < ApplicationRecord
   belongs_to :auth_key
   belongs_to :device
 
-  after_create :publish
+  after_commit :publish, :on => :create
 
   validate(:on => :create) do
     if !has_alert? && self.sound.nil? && self.badge.nil?
@@ -126,6 +126,7 @@ class Notification < ApplicationRecord
   def to_hash
     Hash.new.tap do |h|
       h[:id] = self.id
+      h[:environment_id] = self.auth_key.environment.id
       h[:device] = self.device.token
       h[:pushed_at] = self.pushed_at
       h[:created_at] = self.created_at
@@ -151,7 +152,7 @@ class Notification < ApplicationRecord
   # Send the notification
   #
   def publish
-    ApnsProxy::RabbitMq.with_queue("apnsproxy-notifications-#{auth_key.environment_id}") do |queue|
+    ApnsProxy::RabbitMq.with_queue("apnsproxy-notifications") do |queue|
       queue.publish(to_hash.to_json, :persistent => true)
     end
   end

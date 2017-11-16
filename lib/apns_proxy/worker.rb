@@ -1,3 +1,7 @@
+Thread.abort_on_exception = true
+$stdout.sync = true
+$stderr.sync = true
+
 module ApnsProxy
   class Worker
 
@@ -8,54 +12,32 @@ module ApnsProxy
       trap("SIGINT") { puts "Exiting..." ; Process.exit(0) }
       trap("SIGTERM") { puts "Exiting..." ; Process.exit(0) }
       puts "Started APNS Proxy worker"
-      loop do
-        start_environment_threads
-        sleep 5
-      end
-    end
 
-    private
-
-    def threads
-      @threads ||= {}
-    end
-
-    def start_environment_threads
-      acceptable_environments = []
-      Environment.all.each do |environment|
-        acceptable_environments << environment.id
-        if threads[environment.id].nil? || !threads[environment.id].alive?
-          puts "Starting thread for environment #{environment.id}"
-          threads[environment.id] = start_environment_thread(environment)
-        end
-      end
-
-      threads.each do |id, thread|
-        if thread.alive? && !acceptable_environments.include?(id)
-          puts "Killing thread for environment #{id}"
-          thread.kill
-        end
-      end
-
-      threads.delete_if { |_,t| !t.alive? }
-    end
-
-    def start_environment_thread(environment)
-      Thread.new do |thread|
-        dispatch(environment)
-      end
-    end
-
-    def dispatch(environment)
+      connections = {}
       channel = ApnsProxy::RabbitMq.create_channel
       channel.prefetch(1)
-      queue = channel.queue("apnsproxy-notifications-#{environment.id}", :durable => true, :arguments => {'x-message-ttl' => 120000})
-      puts "Connected to queue for #{environment.id}"
-      connection = nil
+      queue = channel.queue("apnsproxy-notifications", :durable => true, :arguments => {'x-message-ttl' => 120000})
       queue.subscribe do |delivery_info, properties, body|
         begin
-          connection ||= environment.create_apnotic_connection
           payload = JSON.parse(body)
+          puts payload.inspect
+
+          if connections[payload['environment_id']]
+            connection = connections[payload['environment_id']]
+            puts "Using cached connection for #{payload['environment_id']}"
+          else
+            environment = Environment.find(payload['environment_id'])
+            connection = connections[payload['environment_id']] = environment.create_apnotic_connection
+            connection.on(:error) do |e|
+              # If an error occurs on our HTTP socket, we'll print the details, delete this
+              # connection from the pool.
+              puts "Error on HTTP socket: #{e.class} (#{e.message})"
+              puts e.backtrace
+              connections.delete_if { |k,v| v == connection }
+            end
+            puts "Created connection for #{payload['environment_id']}"
+          end
+
           if notification = Notification.find_by_id(payload['id'])
             response = connection.push(notification.apnotic_notification)
             if response.status == '200'
@@ -71,20 +53,21 @@ module ApnsProxy
               puts "[N#{notification.id}] Failed to send notification (#{response.status}: #{response.body['reason']})"
             end
           end
+
+          @should_retry = false
         rescue => e
           puts "Error while sending notification: #{e.class} (#{e.message})"
           puts e.backtrace
-          connection.close rescue nil
+          connections.delete(payload['environment_id'])
+          @should_retry = !@should_retry
+          if @should_retry
+            puts "Retrying once..."
+            retry
+          end
         end
       end
+
       loop { sleep 10 }
-    rescue => e
-      puts "Error in loop: #{e.class} (#{e.message}"
-      puts e.backtrace
-    ensure
-      queue.unsubscribe rescue nil
-      channel.stop rescue nil
-      connection.close rescue nil
     end
 
   end

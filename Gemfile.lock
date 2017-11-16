@@ -39,9 +39,9 @@ GEM
     annotate (2.6.2)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
-    apnotic (1.0.1)
+    apnotic (1.3.0)
       connection_pool (~> 2.0)
-      net-http2 (>= 0.14, < 2)
+      net-http2 (>= 0.16, < 2)
     arel (6.0.4)
     bcrypt (3.1.7)
     bcrypt-ruby (3.1.5)
@@ -73,7 +73,7 @@ GEM
     houston (2.0.2)
       commander (~> 4.1)
       json
-    http-2 (0.8.3)
+    http-2 (0.8.4)
     i18n (0.8.4)
     jbuilder (2.1.1)
       activesupport (>= 3.0.0, < 5)
@@ -96,8 +96,8 @@ GEM
     minitest (5.10.2)
     multi_json (1.12.1)
     mysql2 (0.4.6)
-    net-http2 (0.14.1)
-      http-2 (~> 0.8.2)
+    net-http2 (0.16.0)
+      http-2 (= 0.8.4)
     nifty-utils (1.1.7)
     nilify_blanks (1.0.3)
       activerecord (>= 3.0.0)
@@ -186,4 +186,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
 
 BUNDLED WITH
-   1.14.6
+   1.15.4
