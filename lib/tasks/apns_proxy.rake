@@ -7,7 +7,9 @@ namespace :apns_proxy do
 
   desc 'Tidy notifications'
   task :tidy_notifications => :environment do
-    Notification.tidy
+    puts "Deleting notifications older than #{Notification.retention_days} days"
+    count = Notification.tidy
+    puts "Removed #{count} notifications"
   end
 
   desc 'Setup the initial admin user'
