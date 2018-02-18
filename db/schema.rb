@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,81 +10,106 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220122006) do
+ActiveRecord::Schema.define(version: 20180218175956) do
 
-  create_table "applications", force: :cascade do |t|
-    t.string   "name",       limit: 255
+  create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "api_key",    limit: 255
+    t.string "api_key"
   end
 
-  create_table "auth_keys", force: :cascade do |t|
-    t.integer  "application_id", limit: 4
-    t.string   "name",           limit: 255
-    t.string   "key",            limit: 255
-    t.integer  "environment_id", limit: 4
+  create_table "auth_keys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "application_id"
+    t.string "name"
+    t.string "key"
+    t.integer "environment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["application_id"], name: "index_auth_keys_on_application_id"
+    t.index ["environment_id"], name: "index_auth_keys_on_environment_id"
   end
 
-  add_index "auth_keys", ["application_id"], name: "index_auth_keys_on_application_id", using: :btree
-  add_index "auth_keys", ["environment_id"], name: "index_auth_keys_on_environment_id", using: :btree
+  create_table "authie_sessions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "token"
+    t.string "browser_id"
+    t.integer "user_id"
+    t.boolean "active", default: true
+    t.text "data"
+    t.datetime "expires_at"
+    t.datetime "login_at"
+    t.string "login_ip"
+    t.datetime "last_activity_at"
+    t.string "last_activity_ip"
+    t.string "last_activity_path"
+    t.string "user_agent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "user_type"
+    t.integer "parent_id"
+    t.datetime "two_factored_at"
+    t.string "two_factored_ip"
+    t.integer "requests", default: 0
+    t.datetime "password_seen_at"
+    t.string "token_hash"
+    t.string "host"
+    t.index ["browser_id"], name: "index_authie_sessions_on_browser_id", length: { browser_id: 10 }
+    t.index ["token"], name: "index_authie_sessions_on_token", length: { token: 10 }
+    t.index ["token_hash"], name: "index_authie_sessions_on_token_hash", length: { token_hash: 10 }
+    t.index ["user_id"], name: "index_authie_sessions_on_user_id"
+  end
 
-  create_table "devices", force: :cascade do |t|
-    t.integer  "auth_key_id",               limit: 4
-    t.string   "token",                     limit: 255
-    t.integer  "usage",                     limit: 4,   default: 0
+  create_table "devices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "auth_key_id"
+    t.string "token"
+    t.integer "usage", default: 0
     t.datetime "last_sent_notification_at"
     t.datetime "unsubscribed_at"
     t.datetime "created_at"
     t.datetime "last_registered_at"
-    t.string   "label",                     limit: 255
+    t.string "label"
+    t.index ["auth_key_id"], name: "index_devices_on_auth_key_id"
   end
 
-  add_index "devices", ["auth_key_id"], name: "index_devices_on_auth_key_id", using: :btree
-
-  create_table "environments", force: :cascade do |t|
-    t.integer  "application_id",   limit: 4
-    t.string   "name",             limit: 255
-    t.text     "certificate",      limit: 65535
+  create_table "environments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "application_id"
+    t.string "name"
+    t.text "certificate"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "apns_environment", limit: 255
-    t.string   "topic",            limit: 255
+    t.string "apns_environment"
+    t.string "topic"
+    t.index ["application_id"], name: "index_environments_on_application_id"
   end
 
-  add_index "environments", ["application_id"], name: "index_environments_on_application_id", using: :btree
-
-  create_table "notifications", force: :cascade do |t|
-    t.integer  "auth_key_id",       limit: 4
-    t.integer  "device_id",         limit: 4
+  create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "auth_key_id"
+    t.integer "device_id"
     t.datetime "pushed_at"
     t.datetime "created_at"
-    t.string   "alert_body",        limit: 255
-    t.string   "action_loc_key",    limit: 255
-    t.string   "loc_key",           limit: 255
-    t.text     "loc_args",          limit: 65535
-    t.string   "launch_image",      limit: 255
-    t.integer  "badge",             limit: 4
-    t.string   "sound",             limit: 255
-    t.boolean  "content_available"
-    t.text     "custom_data",       limit: 65535
-    t.integer  "error_code",        limit: 4
-    t.boolean  "locked",                          default: false
-    t.string   "status_code",       limit: 255
-    t.string   "status_reason",     limit: 255
+    t.string "alert_body"
+    t.string "action_loc_key"
+    t.string "loc_key"
+    t.text "loc_args"
+    t.string "launch_image"
+    t.integer "badge"
+    t.string "sound"
+    t.boolean "content_available"
+    t.text "custom_data"
+    t.integer "error_code"
+    t.boolean "locked", default: false
+    t.string "status_code"
+    t.string "status_reason"
+    t.index ["auth_key_id"], name: "index_notifications_on_auth_key_id"
+    t.index ["device_id"], name: "index_notifications_on_device_id"
+    t.index ["pushed_at"], name: "index_notifications_on_pushed_at"
   end
 
-  add_index "notifications", ["auth_key_id"], name: "index_notifications_on_auth_key_id", using: :btree
-  add_index "notifications", ["device_id"], name: "index_notifications_on_device_id", using: :btree
-  add_index "notifications", ["pushed_at"], name: "index_notifications_on_pushed_at", using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "username",        limit: 255
-    t.string   "password_digest", limit: 255
-    t.string   "name",            limit: 255
-    t.string   "email_address",   limit: 255
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.string "name"
+    t.string "email_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

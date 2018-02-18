@@ -7,21 +7,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def current_user
-    @current_user ||= User.find_by_id(session[:user_id]) || :false
-  end
-
-  def current_user=(user)
-    if user.is_a?(User)
-      session[:user_id] = user.id
-      @current_user = user
-    end
-  end
-
-  def logged_in?
-    current_user.is_a?(User)
-  end
-
   def login_required
     unless logged_in?
       redirect_to login_path

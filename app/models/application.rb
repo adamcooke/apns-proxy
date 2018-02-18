@@ -6,6 +6,7 @@
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  api_key    :string(255)
 #
 
 class Application < ApplicationRecord

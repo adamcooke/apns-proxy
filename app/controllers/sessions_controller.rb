@@ -3,7 +3,8 @@ class SessionsController < ApplicationController
   skip_before_action :login_required
 
   def create
-    if self.current_user = User.authenticate(params[:username], params[:password])
+    if user = User.authenticate(params[:username], params[:password])
+      self.current_user = user
       redirect_to root_path
     else
       flash.now[:alert] = "The username/password you have entered is incorrect."

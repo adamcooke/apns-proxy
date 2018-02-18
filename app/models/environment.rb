@@ -5,10 +5,11 @@
 #  id               :integer          not null, primary key
 #  application_id   :integer
 #  name             :string(255)
-#  certificate      :text
+#  certificate      :text(65535)
 #  created_at       :datetime
 #  updated_at       :datetime
 #  apns_environment :string(255)
+#  topic            :string(255)
 #
 # Indexes
 #

@@ -10,14 +10,16 @@
 #  alert_body        :string(255)
 #  action_loc_key    :string(255)
 #  loc_key           :string(255)
-#  loc_args          :text
+#  loc_args          :text(65535)
 #  launch_image      :string(255)
 #  badge             :integer
 #  sound             :string(255)
 #  content_available :boolean
-#  custom_data       :text
+#  custom_data       :text(65535)
 #  error_code        :integer
 #  locked            :boolean          default(FALSE)
+#  status_code       :string(255)
+#  status_reason     :string(255)
 #
 # Indexes
 #
@@ -29,7 +31,7 @@
 class Notification < ApplicationRecord
 
   belongs_to :auth_key
-  belongs_to :device
+  belongs_to :device, :optional => true
 
   after_commit :publish, :on => :create
 
