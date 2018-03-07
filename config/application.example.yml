@@ -9,3 +9,7 @@ RMQ_VHOST:
 APNS_RENTENTION_DAYS: 7
 
 FORCE_SSL: 1
+
+# Use this to restrict access to the admin UI to a given set of IPs.
+# This will not apply to API level access which will be available from all IPs.
+# AUTHORIZED_NETWORKS: "127.0.0.1/32, 10.0.0.0/16"

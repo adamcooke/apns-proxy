@@ -3,7 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :require_authorized_network
   before_action :login_required
+
+  rescue_from AuthorizedNetworks::UnauthorizedNetworkError, :with => :unauthorized_network
 
   private
 
@@ -14,5 +17,9 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :logged_in?, :current_user
+
+  def unauthorized_network
+    render :plain => "Not permitted", :Status => 403
+  end
 
 end

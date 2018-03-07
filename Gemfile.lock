@@ -47,6 +47,7 @@ GEM
       net-http2 (>= 0.16, < 2)
     arel (8.0.0)
     authie (3.1.3)
+    authorized_networks (1.0.2)
     bcrypt (3.1.11)
     builder (3.2.3)
     bunny (2.9.1)
@@ -184,6 +185,7 @@ DEPENDENCIES
   annotate
   apnotic
   authie
+  authorized_networks
   bcrypt
   bunny
   coffee-rails
