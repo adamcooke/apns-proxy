@@ -1,6 +1,8 @@
 %h2 Please login to the APNS Proxy
 %p.intro
   Enter your username & password in order to login to this system.
+  All login attempts are logged. Your IP address is #{request.ip}.
+
 
 = form_tag do
   %dl
@@ -10,5 +12,3 @@
     %dd= password_field_tag :password
   %p.submit
     = submit_tag 'Login'
-
-%p= request.ip
