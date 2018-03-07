@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  match 'api/:action', :controller => 'api', :via => [:get, :post]
+  post 'api/notify' => 'api#notify'
+  post 'api/register' => 'api#register'
+  post 'api/add_auth_key' => 'api#add_auth_key'
+  post 'api/remove_auth_key' => 'api#remove_auth_key'
 
   resources :applications do
     resources :environments
