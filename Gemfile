@@ -19,6 +19,7 @@ gem 'apnotic'
 gem 'figaro'
 gem 'authie'
 gem 'log_logins'
+gem 'rack-custom-proxies'
 
 group :production do
   gem 'rails_serve_static_assets'

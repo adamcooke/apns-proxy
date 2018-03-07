@@ -114,6 +114,8 @@ GEM
       mini_portile2 (~> 2.3.0)
     puma (3.11.2)
     rack (2.0.4)
+    rack-custom-proxies (1.0.0)
+      rack
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
     rails (5.1.5)
@@ -195,6 +197,7 @@ DEPENDENCIES
   nifty-utils
   nilify_blanks
   puma
+  rack-custom-proxies
   rails (= 5.1.5)
   rails_serve_static_assets
   rails_stdout_logging
