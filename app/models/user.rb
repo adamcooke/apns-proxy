@@ -13,6 +13,8 @@
 
 class User < ApplicationRecord
 
+  include LogLogins::User
+
   has_secure_password
 
   validates :username, :presence => true, :uniqueness => true
@@ -21,10 +23,19 @@ class User < ApplicationRecord
 
   scope :asc, -> { order(:name) }
 
-  def self.authenticate(username, password)
+  def self.authenticate(username, password, ip)
     user = self.where("username = ? OR email_address = ?", username, username).first
-    return nil unless user
-    return nil unless user.authenticate(password)
+    if user.nil?
+      LogLogins.fail(username, nil, ip)
+      return nil
+    end
+
+    unless user.authenticate(password)
+      LogLogins.fail(username, user, ip)
+      return nil
+    end
+
+    LogLogins.success(username, user, ip)
     return user
   end
 

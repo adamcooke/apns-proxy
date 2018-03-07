@@ -18,6 +18,7 @@ gem 'bunny'
 gem 'apnotic'
 gem 'figaro'
 gem 'authie'
+gem 'log_logins'
 
 group :production do
   gem 'rails_serve_static_assets'

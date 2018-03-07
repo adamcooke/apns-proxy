@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180218175956) do
+ActiveRecord::Schema.define(version: 20180307123300) do
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -80,6 +80,21 @@ ActiveRecord::Schema.define(version: 20180218175956) do
     t.string "apns_environment"
     t.string "topic"
     t.index ["application_id"], name: "index_environments_on_application_id"
+  end
+
+  create_table "login_events", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "user_type"
+    t.integer "user_id"
+    t.string "username"
+    t.string "action"
+    t.string "interface"
+    t.string "ip"
+    t.string "user_agent"
+    t.datetime "created_at"
+    t.index ["created_at"], name: "index_login_events_on_created_at"
+    t.index ["interface"], name: "index_login_events_on_interface", length: { interface: 10 }
+    t.index ["ip"], name: "index_login_events_on_ip", length: { ip: 10 }
+    t.index ["user_type", "user_id"], name: "index_login_events_on_user_type_and_user_id", length: { user_type: 10 }
   end
 
   create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
