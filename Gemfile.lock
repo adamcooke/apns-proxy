@@ -114,7 +114,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     puma (3.11.2)
     rack (2.0.4)
-    rack-custom-proxies (1.0.0)
+    rack-custom-proxies (1.0.1)
       rack
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
