@@ -18,6 +18,7 @@ gem 'bunny'
 gem 'apnotic'
 gem 'figaro'
 gem 'authie'
+gem 'authie-two-factor', :path => "../authie-two-factor"
 gem 'log_logins'
 gem 'rack-custom-proxies'
 gem 'authorized_networks'

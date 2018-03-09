@@ -14,6 +14,7 @@
 class User < ApplicationRecord
 
   include LogLogins::User
+  include Authie::TwoFactor::User
 
   has_secure_password
 

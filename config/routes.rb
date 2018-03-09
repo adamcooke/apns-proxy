@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount Authie::TwoFactor::Engine => '/twofactor'
+
   post 'api/notify' => 'api#notify'
   post 'api/register' => 'api#register'
   post 'api/add_auth_key' => 'api#add_auth_key'

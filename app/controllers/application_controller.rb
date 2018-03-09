@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :require_authorized_network
   before_action :login_required
+  before_action :require_two_factor_auth
 
   rescue_from AuthorizedNetworks::UnauthorizedNetworkError, :with => :unauthorized_network
 

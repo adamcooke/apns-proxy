@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180307163740) do
+ActiveRecord::Schema.define(version: 20180308115756) do
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -28,6 +28,30 @@ ActiveRecord::Schema.define(version: 20180307163740) do
     t.datetime "updated_at"
     t.index ["application_id"], name: "index_auth_keys_on_application_id"
     t.index ["environment_id"], name: "index_auth_keys_on_environment_id"
+  end
+
+  create_table "authie_2f_profiles", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "user_type"
+    t.integer "user_id"
+    t.string "token"
+    t.string "token_iv"
+    t.integer "attempts", default: 0
+    t.datetime "last_attempt_at"
+    t.datetime "last_verified_at"
+    t.boolean "active", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["user_id"], name: "index_authie_2f_profiles_on_user_id"
+  end
+
+  create_table "authie_2f_recovery_tokens", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "user_type"
+    t.integer "user_id"
+    t.string "token"
+    t.datetime "used_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["user_id"], name: "index_authie_2f_recovery_tokens_on_user_id"
   end
 
   create_table "authie_sessions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   skip_before_action :login_required
+  skip_before_action :require_two_factor_auth
 
   def create
     if user = User.authenticate(params[:username], params[:password], request.ip)
@@ -17,6 +18,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
+    auth_session.invalidate!
     redirect_to login_path, :notice => "You have been logged out"
   end
 
