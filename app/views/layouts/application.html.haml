@@ -14,4 +14,4 @@
       - if logged_in?
         %p Logged in as #{current_user.name} (#{link_to 'logout', logout_path, :method => :delete})
         - unless current_user.two_factor_enabled?
-          %p= link_to "Set up two factor authentication", authie_two_factor.setup_path
+          %p= link_to "Set up two factor authentication", authie_two_factor.download_path
