@@ -13,6 +13,7 @@
 
 class User < ApplicationRecord
 
+  include Authie::User
   include LogLogins::User
 
   has_secure_password
