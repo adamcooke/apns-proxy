@@ -30,6 +30,10 @@ class Environment < ApplicationRecord
 
   scope :asc, -> { order(:name) }
 
+  def voip?
+    topic =~ /\.voip\z/
+  end
+
   def development?
     apns_environment == 'development'
   end

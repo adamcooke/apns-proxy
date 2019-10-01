@@ -38,7 +38,7 @@ class Notification < ApplicationRecord
   after_commit :publish, :on => :create
 
   validate(:on => :create) do
-    if !has_alert? && self.sound.nil? && self.badge.nil?
+    if !has_alert? && self.sound.nil? && self.badge.nil? && !auth_key.environment.voip?
       errors.add :alert, "missing"
       errors.add :sound, "missing"
       errors.add :badge, "missing"
