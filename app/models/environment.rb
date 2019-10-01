@@ -2,7 +2,7 @@
 #
 # Table name: environments
 #
-#  id               :integer          not null, primary key
+#  id               :bigint(8)        not null, primary key
 #  application_id   :integer
 #  name             :string(255)
 #  certificate      :text(65535)

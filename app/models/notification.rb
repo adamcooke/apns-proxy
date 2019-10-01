@@ -2,7 +2,7 @@
 #
 # Table name: notifications
 #
-#  id                :integer          not null, primary key
+#  id                :bigint(8)        not null, primary key
 #  auth_key_id       :integer
 #  device_id         :integer
 #  pushed_at         :datetime
@@ -20,6 +20,8 @@
 #  locked            :boolean          default(FALSE)
 #  status_code       :string(255)
 #  status_reason     :string(255)
+#  priority          :integer
+#  expiration        :datetime
 #
 # Indexes
 #
@@ -146,6 +148,9 @@ class Notification < ApplicationRecord
         h[:notification][:alert][:launch_image] = self.launch_image       if self.launch_image
       end
 
+      h[:notification][:priority]   = self.priority       if self.priority
+      h[:notification][:expiration] = self.expiration     if self.expiration
+
       h[:notification][:custom_data] = JSON.parse(self.custom_data)     if self.custom_data
     end
   end
@@ -209,6 +214,14 @@ class Notification < ApplicationRecord
         n.content_available = !!payload[:content_available]
       end
 
+      if payload[:priority].present?
+        n.priority = payload[:priority]
+      end
+
+      if payload[:expiration].present?
+        n.expiration = Time.parse(payload[:expiration]) rescue nil
+      end
+
       if payload[:custom_data].is_a?(Hash)
         n.custom_data = payload[:custom_data].to_json
       end
@@ -237,6 +250,9 @@ class Notification < ApplicationRecord
       n.alert[:loc_args]        = self.loc_args                   if self.loc_args
       n.alert[:launch_image]    = self.launch_image               if self.launch_image
     end
+
+    n.priority                 = self.priority                  if self.priority
+    n.expiration               = self.expiration.to_i           if self.priority
     n.custom_payload           = JSON.parse(self.custom_data)   if self.custom_data
     n
   end
