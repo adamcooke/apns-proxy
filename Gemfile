@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.5'
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'rails', '5.2.4.1'
+gem 'mysql2'
 gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
@@ -26,3 +26,4 @@ group :production do
   gem 'rails_serve_static_assets'
   gem 'rails_stdout_logging'
 end
+
