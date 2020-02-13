@@ -41,8 +41,8 @@ class AuthKey < ApplicationRecord
     end
   end
 
-  def touch_device(token)
-    Device.touch_device(self, token)
+  def touch_device(token, options = {})
+    Device.touch_device(self, token, options)
   end
 
 end
