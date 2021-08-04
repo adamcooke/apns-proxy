@@ -34,7 +34,7 @@ class Device < ApplicationRecord
     self.save!
   end
 
-  def self.touch_device(auth_key, token)
+  def self.touch_device(auth_key, token, options = {})
     device = self.where(:auth_key_id => auth_key.id, :token => token).first
     if device.nil?
       device = self.new
@@ -42,6 +42,7 @@ class Device < ApplicationRecord
       device.token = token
       device.last_registered_at = Time.now
     end
+    device.label = options[:label] if options[:label].present?
     device.usage += 1
     device.last_sent_notification_at = Time.now
     device.save!

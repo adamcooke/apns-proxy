@@ -180,6 +180,8 @@ class Notification < ApplicationRecord
     n.auth_key = auth_key
     if payload[:device].is_a?(String)
       n.device = n.auth_key.touch_device(payload[:device])
+    elsif payload[:device].is_a?(Hash)
+      n.device = n.auth_key.touch_device(payload[:device][:token], label: payload[:device][:label])
     end
 
     if payload[:notification].is_a?(Hash)
