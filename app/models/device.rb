@@ -2,7 +2,7 @@
 #
 # Table name: devices
 #
-#  id                        :integer          not null, primary key
+#  id                        :bigint(8)        not null, primary key
 #  auth_key_id               :integer
 #  token                     :string(255)
 #  usage                     :integer          default(0)

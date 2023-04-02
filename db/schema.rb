@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180307163740) do
+ActiveRecord::Schema.define(version: 20191001114254) do
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -117,6 +117,8 @@ ActiveRecord::Schema.define(version: 20180307163740) do
     t.boolean "locked", default: false
     t.string "status_code"
     t.string "status_reason"
+    t.integer "priority"
+    t.datetime "expiration"
     t.index ["auth_key_id"], name: "index_notifications_on_auth_key_id"
     t.index ["device_id"], name: "index_notifications_on_device_id"
     t.index ["pushed_at"], name: "index_notifications_on_pushed_at"
